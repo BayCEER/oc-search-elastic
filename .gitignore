@@ -1,0 +1,6 @@
+/target/
+/oc_images/
+.classpath
+.project
+.settings
+/bin/

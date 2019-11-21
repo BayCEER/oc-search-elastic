@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+# Elastic
+service elasticsearch start 
+/usr/share/oc-search-elastic/put_template.sh
+
+chmod +x /var/lib/oc-search-elastic/oc-search-elastic.jar
+ln -sf /var/lib/oc-search-elastic/oc-search-elastic.jar /etc/init.d/oc-search-elastic
+ln -sf /etc/oc-search-elastic/application.properties /var/lib/oc-search-elastic/application.properties
+update-rc.d oc-search-elastic defaults
+
+service oc-search-elastic start
+
+
+  
+
+

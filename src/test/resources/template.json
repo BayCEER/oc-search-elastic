@@ -1,0 +1,34 @@
+{
+  "index_patterns":["oc-search*"],
+   "settings": {    
+        "analysis": {      
+            "analyzer": {        
+                "readme_analyzer": {          
+                    "tokenizer": "standard",          
+                    "char_filter": ["colon_to_space"]       
+                }      
+            },      
+            "char_filter": {
+                "colon_to_space": {
+                    "type": "mapping",          
+                    "mappings": [            
+                        ": => \"\""          
+                    ]        
+                }
+            }    
+        }      
+    },
+    "mappings": {
+        "properties": {
+            "_content": {
+                "type": "text",
+                "fields": {
+                    "search": {
+                        "type": "text",
+                        "analyzer": "readme_analyzer"
+                    }
+                }
+            }
+        }
+    }
+}
