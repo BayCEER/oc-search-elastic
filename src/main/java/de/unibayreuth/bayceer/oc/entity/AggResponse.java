@@ -3,20 +3,24 @@ package de.unibayreuth.bayceer.oc.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.StringUtils;
+
 public class AggResponse {	
 	
-	String name;
+	String key;	
 	long sumOtherDocCount;
 	List<TermCount> results;
+	String title;
+	
 	
 	public AggResponse() {
 		this.results = new ArrayList<TermCount>(10);
 	}
 	
 		
-	public AggResponse(String name, long sumOtherDocCounts) {
+	public AggResponse(String key, long sumOtherDocCounts) {
 		this();
-		this.name = name;
+		this.key = key;
 		this.sumOtherDocCount = sumOtherDocCounts;		
 	}
 
@@ -27,14 +31,12 @@ public class AggResponse {
 		this.sumOtherDocCount = sumOtherDocCount;
 	}
 	
-	public String getName() {
-		return name;
+	public void buildTitle() {
+		this.title = String.format("%s (%s)",StringUtils.capitalize(key), (sumOtherDocCount>0)?">" + results.size():results.size());		
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
+	
 	public void setSumOtherDocCount(long sumOtherDocCount) {
 		this.sumOtherDocCount = sumOtherDocCount;
 	}
@@ -48,4 +50,25 @@ public class AggResponse {
 	public void setResults(List<TermCount> results) {
 		this.results = results;
 	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+	public String getKey() {
+		return key;
+	}
+
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
 }

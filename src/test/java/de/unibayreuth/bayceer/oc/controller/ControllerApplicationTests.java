@@ -84,11 +84,11 @@ public abstract class ControllerApplicationTests {
 						requestFields(fieldWithPath("[]").description("An array of documents")).andWithPrefix("[].",
 								dcDocumentFields)))
 				.body(new String(Files.readAllBytes(Paths.get("src/test/resources/public.json"))))
-				.post("/indexes/{collection}", PUB_COL).then().statusCode(200);
+				.post("/{collection}/indexes", PUB_COL).then().statusCode(200);
 
 		// Import dc2 data
 		given(web).body(new String(Files.readAllBytes(Paths.get("src/test/resources/private.json"))))
-				.post("/indexes/{collection}", PRI_COL).then().statusCode(200);
+				.post("/{collection}/indexes", PRI_COL).then().statusCode(200);
 
 		// Wait on refresh
 		try {
@@ -111,9 +111,9 @@ public abstract class ControllerApplicationTests {
 														
 					)																			
 			)
-			).delete("/indexes/{collection}", PUB_COL).then().statusCode(200);
+			).delete("/{collection}/indexes", PUB_COL).then().statusCode(200);
 			
-			given(web).delete("/indexes/{collection}", PRI_COL).then().statusCode(200);
+			given(web).delete("/{collection}/indexes", PRI_COL).then().statusCode(200);
 		}
 	}
 

@@ -7,7 +7,8 @@ curl -XPUT "localhost:9200/_template/readme" -H 'Content-Type: application/json'
             "analyzer": {        
                 "readme_analyzer": {          
                     "tokenizer": "standard",          
-                    "char_filter": ["colon_to_space"]       
+                    "char_filter": ["colon_to_space"],
+                    "filter": ["lowercase"]        
                 }      
             },      
             "char_filter": {

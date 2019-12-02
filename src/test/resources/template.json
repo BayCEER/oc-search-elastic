@@ -5,7 +5,8 @@
             "analyzer": {        
                 "readme_analyzer": {          
                     "tokenizer": "standard",          
-                    "char_filter": ["colon_to_space"]       
+                    "char_filter": ["colon_to_space"],
+                    "filter": ["lowercase"]       
                 }      
             },      
             "char_filter": {

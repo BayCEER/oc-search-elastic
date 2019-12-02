@@ -41,7 +41,7 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 			)
 		)
 		.body(new String(Files.readAllBytes(Paths.get("src/test/resources/public_post.json"))))
-		.post("/index/{collection}/{key}",PUB_COL,"99")
+		.post("/{collection}/index/{key}",PUB_COL,"99")
 		.then()
 		.statusCode(200);				
 	}
@@ -60,7 +60,7 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 						responseFields(dcDocumentFields)						
 				)
 		)
-		.get("index/{collection}/{key}",PUB_COL,"10").then().assertThat()
+		.get("/{collection}/index/{key}",PUB_COL,"10").then().assertThat()
 		.body("content",equalTo("title:Secondary microplastics\ncreator:Lisa Simpson\npublisher:University of Calgary\n"));
 	}
 		
@@ -79,10 +79,10 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 				)
 		)
 		.body(new String(Files.readAllBytes(Paths.get("src/test/resources/public_update.json"))))
-		.put("/index/{collection}/{key}",PUB_COL,"2")
+		.put("/{collection}/index/{key}",PUB_COL,"2")
 		.then()
 		.statusCode(200);				
-		given(web).get("/index/{collection}/{key}",PUB_COL,"2").then().assertThat().body("content",equalTo("title:Ternary microplastics\ncreator:Marge Simpson\npublisher:University of Munich\n"));	
+		given(web).get("/{collection}/index/{key}",PUB_COL,"2").then().assertThat().body("content",equalTo("title:Ternary microplastics\ncreator:Marge Simpson\npublisher:University of Munich\n"));	
 	}
 		
 		
@@ -97,8 +97,8 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 				
 			)
 		)
-		.delete("/index/{collection}/{key}",PUB_COL,"2").then().statusCode(200);		
-		given(web).get("/index/{collection}/{key}",PUB_COL,"2").then().statusCode(404);				
+		.delete("/{collection}/index/{key}",PUB_COL,"2").then().statusCode(200);		
+		given(web).get("/{collection}/index/{key}",PUB_COL,"2").then().statusCode(404);				
 	}
 	
 	

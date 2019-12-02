@@ -119,14 +119,6 @@ A `GET` request is used to retrieve the fields of an index
 
 operation::field-names[snippets='path-parameters,response-fields,curl-request,http-response']
 
-[[resources-field-cardinality]]
-=== Get Field Cardinality
-
-A `GET` request is used to retrieve the field cardinality of an index
-
-operation::field-cardinality[snippets='path-parameters,response-fields,curl-request,http-response']
-
-
 == Image
 
 The image resources is used to store and query preview images in full resolution. All image data is transferred in PNG (image/png) format. 

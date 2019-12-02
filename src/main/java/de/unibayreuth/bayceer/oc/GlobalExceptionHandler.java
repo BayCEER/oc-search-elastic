@@ -19,10 +19,10 @@ public class GlobalExceptionHandler {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@ExceptionHandler()
-	public final ResponseEntity<String> handleReadmeParserException(Exception ex, WebRequest request) {
+	public final ResponseEntity<String> handleException(Exception ex, WebRequest request) {
 		HttpHeaders headers = new HttpHeaders();
 		log.error(ex.getMessage());
-        return new ResponseEntity<String>("Failed to parse readme.", headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<String>("An internal error occured.", headers, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	

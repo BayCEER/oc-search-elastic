@@ -22,15 +22,15 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 		String q = "microplastics";
 		
 		given(web).param("query", q).param("start", 0).param("hitsPerPage",5)
-		.get("/index/{collection}",PUB_COL).then()
+		.get("/{collection}/index",PUB_COL).then()
 		.assertThat().body("hits.size()", is(5)).and().body("totalHits", equalTo(12));
 						
 		given(web).param("query", q).param("start", 5).param("hitsPerPage",5)
-		.get("/index/{collection}",PUB_COL).then()
+		.get("/{collection}/index",PUB_COL).then()
 		.assertThat().body("hits.size()", is(5)).and().body("totalHits", equalTo(12));
 		
 		given(web).param("query", q).param("start", 10).param("hitsPerPage",5)
-		.get("/index/{collection}",PUB_COL).then()
+		.get("/{collection}/index",PUB_COL).then()
 		.assertThat().body("hits.size()",is(2)).and().body("totalHits", equalTo(12));
 		
 	}
@@ -48,9 +48,8 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 						parameterWithName("start").description("Start index"),
 						parameterWithName("hitsPerPage").description("Number of hit records per page").optional(),
 						parameterWithName("fragmentSize").description("Number of characters in each preview fragment").optional(),
-						parameterWithName("aggs").description("Field name list for aggregation e.g. \"creator,publisher\"").optional(),
-						parameterWithName("aggSize").description("Maximum number of terms in aggregation result list").optional(),
-						parameterWithName("filter").description("Filter expression as JSON map e.g.: {\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"],...}").optional()
+						parameterWithName("fields").description("Field names for aggregation as JSON List e.g. \"['creator','publisher']").optional(),						
+						parameterWithName("filter").description("Filter expression as JSON Map e.g.: {\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"],...}").optional()
 						
 						
 				), 
@@ -63,7 +62,8 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 						fieldWithPath("hits[].thumb").description("Thumbnail").type(JsonFieldType.STRING).optional(),						
 						fieldWithPath("totalHits").description("The number of all hits found").type(JsonFieldType.NUMBER),
 						subsectionWithPath("aggs").description("An array of aggregation results").type(JsonFieldType.ARRAY).optional(),
-						fieldWithPath("aggs[].name").description("Field name").type(JsonFieldType.STRING),
+						fieldWithPath("aggs[].key").description("Field key").type(JsonFieldType.STRING),
+						fieldWithPath("aggs[].title").description("Field title with cardinality").type(JsonFieldType.STRING),
 						fieldWithPath("aggs[].sumOtherDocCount").description("Number of documents not included").type(JsonFieldType.NUMBER),
 						subsectionWithPath("aggs[].results").description("An array of count results").type(JsonFieldType.ARRAY).optional(),
 						fieldWithPath("aggs[].results[].key").description("Key term").type(JsonFieldType.STRING),
@@ -75,11 +75,10 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 		.param("start", 0)
 		.param("hitsPerPage", 10)
 		.param("fragmentSize",5)
-		.param("aggs", "creator,publisher")
-		.param("aggSize", 5)
+		.param("fields", "[\"creator\",\"publisher\"]")		
 		.param("filter", "{\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"]}")
 				
-		.get("/index/{collection}",PUB_COL).then().assertThat().body("hits.size()", is(2))
+		.get("/{collection}/index",PUB_COL).then().assertThat().body("hits.size()", is(2))
 		.and().body("totalHits", equalTo(2));
 	}
 	

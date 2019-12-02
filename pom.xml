@@ -38,7 +38,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<server.port>5540</server.port>
+		<server.port>5541</server.port>
 	</properties>
 
 	<dependencies>

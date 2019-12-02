@@ -27,33 +27,27 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.unibayreuth.bayceer.oc.controller.ImageController.ImageType;
 import de.unibayreuth.bayceer.oc.entity.AggResponse;
 import de.unibayreuth.bayceer.oc.entity.Hit;
+import de.unibayreuth.bayceer.oc.entity.Preview;
+import de.unibayreuth.bayceer.oc.entity.PreviewAdapter;
 import de.unibayreuth.bayceer.oc.entity.Response;
 import de.unibayreuth.bayceer.oc.entity.TermCount;
 
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class SearchController {
-
-	@Value("${SEARCH_PREVIEW_PRE_TAG:<mark>}")
-	private String searchPreviewPreTag;
-
-	@Value("${SEARCH_PREVIEW_END_TAG:</mark>}")
-	private String searchPreviewEndTag;
-
+	
 	@Autowired
 	private ImageController imageController;
 
@@ -61,21 +55,24 @@ public class SearchController {
 	RestHighLevelClient client;
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	private static final String EMPTY_ARRAY = "[]";
+	private static final String EMPTY_MAP = "{}";
+	private static final int TERM_BUCKET_SIZE = 10;
 
 
-	@GetMapping("/index/{collection}")
+	@GetMapping(value="/{collection}/index",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Response search(@PathVariable String collection,
 			@RequestParam(value = "query", defaultValue = "") String queryString,
 			@RequestParam(value = "start", defaultValue = "0") int start,
 			@RequestParam(value = "hitsPerPage", defaultValue = "10") int hitsPerPage,
 			@RequestParam(value = "fragmentSize", defaultValue = "20") int fragmentSize,
-			@RequestParam(value = "aggs", required = false) List<String> aggs,
-			@RequestParam(value = "aggsSize", defaultValue = "10") int aggsSize,			
-			@RequestParam(value = "filter", required = false) String filter // {"creator":["Maggie Simpson","Bart Simpson"],"publisher":[]}]
+			@RequestParam(value = "fields", defaultValue=EMPTY_ARRAY) String fields, // ['creator','publisher']						
+			@RequestParam(value = "filter", defaultValue=EMPTY_MAP) String filter // {"creator":["Maggie Simpson","Bart Simpson"],"publisher":[]}]
 	) throws ParseException, IOException {
 
-		log.debug("Collection:{} Query:{} Start:{} HitsPerPage:{} FragmentSize:{} Aggregations:{} Filter:{}",
-				collection, queryString, start, hitsPerPage, fragmentSize, aggs, filter);
+		log.debug("Collection:{} Query:{} Start:{} HitsPerPage:{} FragmentSize:{} Fields:{} Filter:{}",
+				collection, queryString, start, hitsPerPage, fragmentSize, fields, filter);
 
 		// Query
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -84,34 +81,35 @@ public class SearchController {
 
 		QueryBuilder q = (queryString.isEmpty()) ? QueryBuilders.matchAllQuery()
 				: QueryBuilders.simpleQueryStringQuery(queryString).field("_content.search");
-
+		
 		// Filter
-		if (filter == null) {
+		if (filter.equals(EMPTY_MAP)) {
 			searchSourceBuilder.query(q);
 		} else {
 			BoolQueryBuilder bq = QueryBuilders.boolQuery().must(q);
 			ObjectMapper om = new ObjectMapper();
 			Map<String, List<String>> map = om.readValue(filter, new TypeReference<Map<String, List<String>>>() {});		
 			map.forEach((key,value) -> {
-				bq.filter(QueryBuilders.termsQuery(key + ".keyword", value));	
+				bq.filter( (value.isEmpty())?QueryBuilders.matchAllQuery(): QueryBuilders.termsQuery(key + ".keyword", value));	
 			});			
 			searchSourceBuilder.query(bq);
 		}
 
 		// Aggregations
-		if (aggs != null) {
-			for (String nf : aggs) {
+		if (!fields.equals(EMPTY_ARRAY)) {				
+			ObjectMapper om = new ObjectMapper();
+			JavaType type = om.getTypeFactory().constructCollectionType(List.class,String.class);			
+			List<String> l = om.readValue(fields, type);			
+			for (String nf : l){			
 				TermsAggregationBuilder ag = AggregationBuilders.terms(nf).field(nf + ".keyword");
-				ag.size(aggsSize);
+				ag.size(TERM_BUCKET_SIZE);
 				searchSourceBuilder.aggregation(ag);
 			}
 		}
 
 		// Highlight
 		HighlightBuilder hb = new HighlightBuilder();
-		HighlightBuilder.Field hc = new HighlightBuilder.Field("_content.search");
-		hc.preTags(searchPreviewPreTag);
-		hc.postTags(searchPreviewEndTag);
+		HighlightBuilder.Field hc = new HighlightBuilder.Field("_content.search");				
 		hc.fragmentSize(fragmentSize);
 		hb.field(hc);
 		searchSourceBuilder.highlighter(hb);
@@ -128,11 +126,11 @@ public class SearchController {
 		for (SearchHit sh : hits.getHits()) {
 			String key = sh.getId();
 			// Previews
-			List<String> previews = new ArrayList<String>();
+			List<Preview> previews = new ArrayList<Preview>();
 			Map<String, HighlightField> hf = sh.getHighlightFields();
 			if (hf.containsKey("_content.search")) {
-				for (Text f : hf.get("_content.search").fragments()) {
-					previews.add(f.string());
+				for (Text f : hf.get("_content.search").fragments()) {										
+					previews.add(PreviewAdapter.fromString(f.string()));
 				}
 				;
 			}
@@ -154,18 +152,19 @@ public class SearchController {
 		}
 
 		// Read Aggregations
-		if (aggs != null) {			
-			List<AggResponse> ares = new ArrayList<AggResponse>(aggs.size());
+		List<AggResponse> ares = new ArrayList<AggResponse>();
+		if (!fields.equals(EMPTY_ARRAY)) {			
 			for (Aggregation a : searchResponse.getAggregations()) {
-				Terms ta = ((Terms)a);				
+				Terms ta = ((Terms)a);						
 				AggResponse ar = new AggResponse(a.getName(),ta.getSumOfOtherDocCounts());															
 				for (Bucket b : ta.getBuckets()) {					
 					ar.getResults().add(new TermCount(b.getKeyAsString(), b.getDocCount()));
-				}				
+				}
+				ar.buildTitle();
 				ares.add(ar);				
 			}
-			r.setAggs(ares);
 		}
+		r.setAggs(ares);
 		return r;
 	}
 

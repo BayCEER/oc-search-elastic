@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.unibayreuth.bayceer.oc.NoSuchDocException;
@@ -39,8 +38,6 @@ import de.unibayreuth.bayceer.oc.parser.ReadmeParser;
 import de.unibayreuth.bayceer.oc.parser.ReadmeParserException;
 
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-
 public class DocumentController {
 
 	@Autowired
@@ -48,7 +45,7 @@ public class DocumentController {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@GetMapping(value = "/index/{collection}/{key}")
+	@GetMapping(value="/{collection}/index/{key}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ReadmeDocument getDocument(@PathVariable String collection, @PathVariable String key)
 			throws IOException, NoSuchDocException {
 		log.debug("Get doc:{} collection:{}", key, collection);
@@ -63,13 +60,13 @@ public class DocumentController {
 	}
 	
 	// Replace
-	@PutMapping(value = "/index/{collection}/{key}")
+	@PutMapping(value="/{collection}/index/{key}",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void updateDocument(@PathVariable String collection, @PathVariable String key, @RequestBody ReadmeDocument doc) throws IOException, ReadmeParserException {		
 		indexDocument(collection, key, doc);		
 	}
 
 	// Create 
-	@PostMapping(value = "/index/{collection}/{key}")
+	@PostMapping(value = "/{collection}/index/{key}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void indexDocument(@PathVariable String collection, @PathVariable String key, @RequestBody ReadmeDocument doc)
 			throws IOException, ReadmeParserException {
 		log.debug("Index doc:{} collection:{} path:{}", key, collection, doc.getPath());		
@@ -86,7 +83,7 @@ public class DocumentController {
 	}
 	
 
-	@DeleteMapping(path = "/index/{collection}/{key}")
+	@DeleteMapping(value="/{collection}/index/{key}")
 	public void delete(@PathVariable String collection, @PathVariable String key) throws IOException {
 		log.debug("Delete doc:{} collection:{}", key, collection);
 		DeleteRequest req = new DeleteRequest(collection, key);
@@ -95,7 +92,7 @@ public class DocumentController {
 	}
 
 
-	@PostMapping(value = "/indexes/{collection}")	
+	@PostMapping(value="/{collection}/indexes",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)	
 	public void indexBulk(@PathVariable String collection, @RequestBody List<ReadmeDocument> docs)
 			throws IOException, ReadmeParserException {
 		log.debug("Bulk loading {} docs to collection:{}",docs.size(),collection);
@@ -120,7 +117,7 @@ public class DocumentController {
 		}
 	}
 
-	@DeleteMapping("/indexes/{collection}")
+	@DeleteMapping("/{collection}/indexes")
 	public void deleteAll(@PathVariable String collection) throws IOException {
 		log.debug("Delete index for collection:{}", collection);
 		try {
