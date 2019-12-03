@@ -8,7 +8,7 @@ public class ReadmeMapAdapter {
 	public static String key = ReadmeDocument.SYSTEM_FIELD_PREFIX + "key";
 	public static String path = ReadmeDocument.SYSTEM_FIELD_PREFIX + "path";
 	public static String content = ReadmeDocument.SYSTEM_FIELD_PREFIX + "content";
-	public static String lastModified = ReadmeDocument.SYSTEM_FIELD_PREFIX + "lastmodified";
+	public static String lastModified = ReadmeDocument.SYSTEM_FIELD_PREFIX + "lastModified";
 
 	public static Map<String, Object> asMap(ReadmeDocument d) {
 		Map<String, Object> s = new HashMap<>();

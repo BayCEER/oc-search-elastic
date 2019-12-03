@@ -1,15 +1,15 @@
 #/!bin/bash
 curl -XPUT "localhost:9200/_template/readme" -H 'Content-Type: application/json' -d'
 {
-  "index_patterns":["oc-search*"],
+  "index_patterns":["oc*","owncloud*"],
    "settings": {    
         "analysis": {      
             "analyzer": {        
-                "readme_analyzer": {          
+                "readme_analyzer": {                	         
                     "tokenizer": "standard",          
                     "char_filter": ["colon_to_space"],
                     "filter": ["lowercase"]        
-                }      
+                }             
             },      
             "char_filter": {
                 "colon_to_space": {
@@ -18,7 +18,8 @@ curl -XPUT "localhost:9200/_template/readme" -H 'Content-Type: application/json'
                         ": => \"\""          
                     ]        
                 }
-            }    
+            }
+                
         }      
     },
     "mappings": {
@@ -29,7 +30,7 @@ curl -XPUT "localhost:9200/_template/readme" -H 'Content-Type: application/json'
                     "search": {
                         "type": "text",
                         "analyzer": "readme_analyzer"
-                    }
+                    }                    
                 }
             }
         }

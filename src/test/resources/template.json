@@ -1,5 +1,5 @@
 {
-  "index_patterns":["oc-search*"],
+  "index_patterns":["oc*","owncloud*"],
    "settings": {    
         "analysis": {      
             "analyzer": {        

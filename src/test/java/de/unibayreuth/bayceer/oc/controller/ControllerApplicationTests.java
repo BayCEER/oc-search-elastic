@@ -50,7 +50,7 @@ public abstract class ControllerApplicationTests {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	
-	public final ParameterDescriptor parameterCollection = parameterWithName("collection").description("Collection identifier");	
+	public final ParameterDescriptor parameterCollection = parameterWithName("collection").description("Collection identifier. Must start with 'oc' or 'owncloud'");	
 	public final ParameterDescriptor parameterKey = parameterWithName("key").description("Document identifier");
 	public final ParameterDescriptor parameterFileId = parameterWithName("id").description("File identifier");
 
@@ -80,7 +80,7 @@ public abstract class ControllerApplicationTests {
 		// Import dc data
 		given(web)
 				.filter(document("indexes-post",
-						pathParameters(parameterWithName("collection").description("Collection identifier")),
+						pathParameters(parameterWithName("collection").description("Collection identifier. Must start with 'oc' or 'owncloud'")),
 						requestFields(fieldWithPath("[]").description("An array of documents")).andWithPrefix("[].",
 								dcDocumentFields)))
 				.body(new String(Files.readAllBytes(Paths.get("src/test/resources/public.json"))))

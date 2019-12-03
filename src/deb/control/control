@@ -3,7 +3,7 @@ Version: [[version]]
 Section: server
 Priority: optional
 Architecture: all
-Pre-Depends: default-jre-headless (>= 2:1.8) | java8-runtime-headless
-Depends: elasticsearch (>= 7.4.2)
+Pre-Depends: default-jre-headless (>= 2:1.8) | java8-runtime-headless , curl
+Depends: elasticsearch (>= 7.4.2), python3-requests
 Description: OwnCloud search provider based on Elasticsearch
 Maintainer: oliver.archner@uni-bayreuth.de

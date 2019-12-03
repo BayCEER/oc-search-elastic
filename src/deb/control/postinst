@@ -2,7 +2,8 @@
 set -e
 
 # Elastic
-service elasticsearch start 
+service elasticsearch start
+chmod +x  /usr/share/oc-search-elastic/put_template.sh
 /usr/share/oc-search-elastic/put_template.sh
 
 chmod +x /var/lib/oc-search-elastic/oc-search-elastic.jar

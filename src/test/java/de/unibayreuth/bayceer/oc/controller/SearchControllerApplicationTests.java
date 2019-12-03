@@ -76,8 +76,7 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 		.param("hitsPerPage", 10)
 		.param("fragmentSize",5)
 		.param("fields", "[\"creator\",\"publisher\"]")		
-		.param("filter", "{\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"]}")
-				
+		.param("filter", "{\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"]}")				
 		.get("/{collection}/index",PUB_COL).then().assertThat().body("hits.size()", is(2))
 		.and().body("totalHits", equalTo(2));
 	}
