@@ -2,9 +2,9 @@
 
 _A microservice to index and search metadata information in ownCloud_
 
-+ [Installation Instruction](https://bayceer.github.io/oc-search-elastic/readme-install.md)
-+ [Query Syntax](https://bayceer.github.io/oc-search-elastic/query_syntax.md)
-+ [ReadmeDC File Specification](https://bayceer.github.io/oc-search-elastic/readme-spec.md)
++ [Installation Instruction](docs/readme-install.md)
++ [Query Syntax](docs/query_syntax.md)
++ [ReadmeDC File Specification](docs/readme-spec.md)
 + [Search UI Prototype](https://github.com/BayCEER/oc-search-ui)
 + [REST API Documentation](https://bayceer.github.io/oc-search-elastic/rest-api.html)
 
