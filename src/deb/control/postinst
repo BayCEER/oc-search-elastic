@@ -7,6 +7,8 @@ chmod +x /usr/share/oc-search-elastic/put_template.sh
 /usr/share/oc-search-elastic/put_template.sh
 
 # Search Api
-ln -sf /etc/oc-search-elastic/application.properties /var/lib/oc-search-elastic/application.properties
+chown -R elasticsearch:elasticsearch /var/lib/oc-search-elastic/
+chmod 700 /var/lib/oc-search-elastic/oc-search-elastic.jar
+
 systemctl enable oc-search-elastic.service
 service oc-search-elastic start
