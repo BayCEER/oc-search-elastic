@@ -1,8 +1,0 @@
-#!/bin/bash
-set -e
-
-if [ -e /etc/init.d/oc-search-elastic ]
-then
-	service oc-search-elastic stop
-	rm -f /etc/init.d/oc-search-elastic
-fi 

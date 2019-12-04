@@ -1,0 +1,11 @@
+[Unit]
+Description=oc-search-elastic
+After=elasticsearch.service
+
+[Service]
+User=elasticsearch
+ExecStart=/var/lib/oc-search-elastic/oc-search-elastic.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
