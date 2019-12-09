@@ -22,6 +22,9 @@ public class ReadmeParser {
 	// Matches all key values
 	
 	
+	public static final String START_COMMENT_CHAR = "#";
+	public static final String LIST_SEPERATOR = ";";
+
 	private static final Pattern p = Pattern.compile("^(.+):(.*)");
 	
 	private static Logger log = LoggerFactory.getLogger(ReadmeParser.class);
@@ -39,12 +42,19 @@ public class ReadmeParser {
 					if (value.isEmpty() || key.isEmpty()) {
 						onKey = false;
 					} else {
-						ret.add(new SimpleEntry<String, String>(key.trim(), value));
+						if (value.contains(LIST_SEPERATOR)) {
+							for(String e :value.split(LIST_SEPERATOR)) {
+								ret.add(new SimpleEntry<String, String>(key.trim(), e.trim()));
+							}							
+						} else {
+							ret.add(new SimpleEntry<String, String>(key.trim(), value));	
+						}
+						
 						onKey = true;
 					}
 				} else {
 					// Ignoring comments 
-					if (!line.trim().startsWith("#")) {					
+					if (!line.trim().startsWith(START_COMMENT_CHAR)) {					
 						// Handle values spanning many lines  
 						if (ret.size() > 0 && onKey) {
 							SimpleEntry<String, String> lastEntry = ret.get(ret.size() - 1);
