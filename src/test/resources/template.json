@@ -1,34 +1,11 @@
 {
   "index_patterns":["oc*","owncloud*"],
-   "settings": {    
-        "analysis": {      
-            "analyzer": {        
-                "readme_analyzer": {          
-                    "tokenizer": "standard",          
-                    "char_filter": ["colon_to_space"],
-                    "filter": ["lowercase"]       
-                }      
-            },      
-            "char_filter": {
-                "colon_to_space": {
-                    "type": "mapping",          
-                    "mappings": [            
-                        ": => \"\""          
-                    ]        
-                }
-            }    
-        }      
-    },
-    "mappings": {
+   "settings": {},
+   "mappings": {
         "properties": {
             "_content": {
                 "type": "text",
-                "fields": {
-                    "search": {
-                        "type": "text",
-                        "analyzer": "readme_analyzer"
-                    }
-                }
+                "index":"false"                
             }
         }
     }

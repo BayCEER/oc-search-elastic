@@ -20,8 +20,7 @@ public class ReadmeParser {
 
 	// https://regex101.com/
 	// Matches all key values
-	
-	
+		
 	public static final String START_COMMENT_CHAR = "#";
 	public static final String LIST_SEPERATOR = ";";
 
@@ -37,19 +36,18 @@ public class ReadmeParser {
 			while ((line = br.readLine()) != null) {
 				Matcher matcher = p.matcher(line);
 				if (matcher.matches()) {
-					String key = matcher.group(1);
-					String value = matcher.group(2);
+					String key = matcher.group(1).trim();
+					String value = matcher.group(2).trim();
 					if (value.isEmpty() || key.isEmpty()) {
 						onKey = false;
 					} else {
 						if (value.contains(LIST_SEPERATOR)) {
 							for(String e :value.split(LIST_SEPERATOR)) {
-								ret.add(new SimpleEntry<String, String>(key.trim(), e.trim()));
+								ret.add(new SimpleEntry<String, String>(key, e.trim()));
 							}							
 						} else {
-							ret.add(new SimpleEntry<String, String>(key.trim(), value));	
-						}
-						
+							ret.add(new SimpleEntry<String, String>(key, value));	
+						}						
 						onKey = true;
 					}
 				} else {

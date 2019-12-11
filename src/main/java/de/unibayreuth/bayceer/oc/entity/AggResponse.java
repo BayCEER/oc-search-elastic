@@ -32,7 +32,8 @@ public class AggResponse {
 	}
 	
 	public void buildTitle() {
-		this.title = String.format("%s (%s)",StringUtils.capitalize(key), (sumOtherDocCount>0)?">" + results.size():results.size());		
+		String k = (key.startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX)?key.substring(1):key);
+		this.title = String.format("%s (%s)",StringUtils.capitalize(k), (sumOtherDocCount>0)?">" + results.size():results.size());		
 	}
 
 	

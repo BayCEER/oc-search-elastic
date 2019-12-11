@@ -5,7 +5,7 @@ import java.util.List;
 public class Hit {
 	private String key;
 	private String path;
-	private List<Preview> previews;
+	private List<String> previews;
 	private Float score;
 	private byte[] thumb;
 
@@ -13,7 +13,7 @@ public class Hit {
 
 	}
 
-	public Hit(String key, Float score, String path, List<Preview> previews, byte[] thumb) {
+	public Hit(String key, Float score, String path, List<String> previews, byte[] thumb) {
 		super();
 		this.key = key;
 		this.score = score;
@@ -30,7 +30,7 @@ public class Hit {
 		return path;
 	}
 
-	public List<Preview> getPreviews() {
+	public List<String> getPreviews() {
 		return previews;
 	}
 
@@ -50,7 +50,7 @@ public class Hit {
 		this.path = path;
 	}
 
-	public void setPreviews(List<Preview> previews) {
+	public void setPreviews(List<String> previews) {
 		this.previews = previews;
 	}
 

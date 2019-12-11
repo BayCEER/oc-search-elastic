@@ -1,8 +1,8 @@
 [
-{"key": "14","path":"SFB/Microplastics/Calgara/README.dc", "content":"title:Secondary microplastics\ncreator:Homer Simpson\npublisher:University of Calgary\n"},
-{"key": "15","path":"SFB/Microplastics/Berlin/README.dc",  "content":"title:Primary microplastics\ncreator:Marge Simpson\npublisher:University of Berlin\n"},
-{"key": "16","path":"SFB/Microplastics/New York/README.dc", "content":"title:Primary microplastics\ncreator:Bart Simpson\npublisher:University of New York\n"},
-{"key": "17","path":"SFB/Microplastics/London/README.dc","content":"title:Primary microplastics\ncreator:Bart Simpson\npublisher:University of London\n"},
-{"key": "18","path":"SFB/Microplastics/Paris/README.dc", "content":"title:Primary microplastics\ncreator:Lisa Simpson\npublisher:University of Paris\n"},
-{"key": "19","path":"SFB/Microplastics/Paris/README.dc", "content":"title:Primary microplastics\ncreator:Maggie Simpson\npublisher:University of Paris\n"}
+{"key": "14","path":"SFB/Microplastics/Calgara/README.dc", "user":"homer", "content":"title:Secondary microplastics\ncreator:Homer Simpson\npublisher:University of Calgary\n"},
+{"key": "15","path":"SFB/Microplastics/Berlin/README.dc",  "user":"marge","content":"title:Primary microplastics\ncreator:Marge Simpson\npublisher:University of Berlin\n"},
+{"key": "16","path":"SFB/Microplastics/New York/README.dc", "user":"bart","content":"title:Primary microplastics\ncreator:Bart Simpson\npublisher:University of New York\n"},
+{"key": "17","path":"SFB/Microplastics/London/README.dc","user":"bart","content":"title:Primary microplastics\ncreator:Bart Simpson\npublisher:University of London\n"},
+{"key": "18","path":"SFB/Microplastics/Paris/README.dc", "user":"lisa","content":"title:Primary microplastics\ncreator:Lisa Simpson\npublisher:University of Paris\n"},
+{"key": "19","path":"SFB/Microplastics/Paris/README.dc", "user":"maggie","content":"title:Primary microplastics\ncreator:Maggie Simpson\npublisher:University of Paris\n"}
 ]

@@ -61,7 +61,8 @@ public abstract class ControllerApplicationTests {
 			fieldWithPath("key").description("Unique document identifier").type(JsonFieldType.STRING),
 			fieldWithPath("path").description("ownCloud file path").type(JsonFieldType.STRING),
 			fieldWithPath("content").description("File content as string").type(JsonFieldType.STRING),
-			fieldWithPath("lastModified").description("Last modification time").type(JsonFieldType.NUMBER).optional() };
+			fieldWithPath("lastModified").description("Last modification time").type(JsonFieldType.NUMBER).optional(),
+			fieldWithPath("user").description("ownCloud user name").type(JsonFieldType.STRING) };
 
 	@Before
 	public void setUp() throws IOException {

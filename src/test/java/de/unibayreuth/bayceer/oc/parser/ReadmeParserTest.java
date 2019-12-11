@@ -61,9 +61,7 @@ public class ReadmeParserTest {
 		assertEquals("value", dc.get(0).getValue());
 	}
 	
-	
-	
-	
+			
 	@Test
 	public void parseList() throws IOException, ReadmeParserException {	
 		String content = new String(Files.readAllBytes(Paths.get("src/test/resources/READMEdc_list.txt")));

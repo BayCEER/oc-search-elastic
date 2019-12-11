@@ -97,6 +97,7 @@ A `DELETE` request is used to delete an index.
 
 operation::indexes-delete[snippets='path-parameters']
 
+
 [[resources-index-get]]
 === Query
 
@@ -115,9 +116,17 @@ operation::document-get[snippets='path-parameters,response-fields,curl-request,h
 [[resources-field-names]]
 === Get Field Names  
 
-A `GET` request is used to retrieve the fields of an index
+A `GET` request is used to retrieve the fields of an index. Fields with no documents are excluded by default.
 
 operation::field-names[snippets='path-parameters,response-fields,curl-request,http-response']
+
+[[resources-terms-get]]
+=== Terms
+
+A `GET` request is used to get all terms with a query 
+
+operation::terms-get[snippets='path-parameters,request-parameters,response-fields,curl-request,http-response']
+
 
 == Image
 

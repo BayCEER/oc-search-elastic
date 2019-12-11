@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RestController;
 import de.unibayreuth.bayceer.oc.NoSuchDocException;
 import de.unibayreuth.bayceer.oc.entity.ReadmeDocument;
 import de.unibayreuth.bayceer.oc.entity.ReadmeMapAdapter;
-import de.unibayreuth.bayceer.oc.parser.ReadmeParser;
 import de.unibayreuth.bayceer.oc.parser.ReadmeParserException;
 
 @RestController
@@ -43,15 +42,29 @@ public class DocumentController {
 	@Autowired
 	RestHighLevelClient client;
 
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());	
+		
 
+	@PostMapping(value = "/{collection}/index/{key}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public void indexDocument(@PathVariable String collection, @PathVariable String key, @RequestBody ReadmeDocument doc)
+			throws IOException, ReadmeParserException {
+		log.debug("Index doc:{} collection:{} path:{}", key, collection, doc.getPath());		
+		IndexRequest req = new IndexRequest(collection);
+		req.id(key);				
+		Map<String,Object> s = ReadmeMapAdapter.toMap(doc);	
+		req.source(s);				
+		IndexResponse res = client.index(req, RequestOptions.DEFAULT);
+		Result result = res.getResult();
+		log.debug("Doc:{} Result:{}", key, result.getLowercase());
+	}
+	
 	@GetMapping(value="/{collection}/index/{key}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ReadmeDocument getDocument(@PathVariable String collection, @PathVariable String key)
 			throws IOException, NoSuchDocException {
 		log.debug("Get doc:{} collection:{}", key, collection);
 		GetRequest req = new GetRequest(collection, key);
 		GetResponse res = client.get(req, RequestOptions.DEFAULT);
-		if (res != null && res.isExists()) {
+		if (res != null && res.isExists()) {											
 			return ReadmeMapAdapter.fromMap(res.getSourceAsMap());			
 		} else {
 			log.warn("Doc:{} not found.", key);
@@ -65,22 +78,6 @@ public class DocumentController {
 		indexDocument(collection, key, doc);		
 	}
 
-	// Create 
-	@PostMapping(value = "/{collection}/index/{key}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void indexDocument(@PathVariable String collection, @PathVariable String key, @RequestBody ReadmeDocument doc)
-			throws IOException, ReadmeParserException {
-		log.debug("Index doc:{} collection:{} path:{}", key, collection, doc.getPath());		
-		IndexRequest req = new IndexRequest(collection);
-		req.id(key);		
-		// Internal fields
-		Map<String,Object> s = ReadmeMapAdapter.asMap(doc);		
-		// User fields
-		s.putAll(ReadmeParser.parseAsMap(doc.getContent()));		
-		req.source(s);				
-		IndexResponse res = client.index(req, RequestOptions.DEFAULT);
-		Result result = res.getResult();
-		log.debug("Doc:{} Result:{}", key, result.getLowercase());
-	}
 	
 
 	@DeleteMapping(value="/{collection}/index/{key}")
@@ -99,8 +96,7 @@ public class DocumentController {
 		BulkRequest req = new BulkRequest();
 		for (ReadmeDocument doc : docs) {
 			IndexRequest ireq = new IndexRequest(collection);			
-			Map<String,Object> s = ReadmeMapAdapter.asMap(doc);		
-			s.putAll(ReadmeParser.parseAsMap(doc.getContent()));						
+			Map<String,Object> s = ReadmeMapAdapter.toMap(doc);										
 			ireq.id(doc.getKey()).source(s);
 			req.add(ireq);
 		}

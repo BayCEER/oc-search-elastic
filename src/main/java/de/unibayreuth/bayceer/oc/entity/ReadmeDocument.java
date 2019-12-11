@@ -4,9 +4,10 @@ public class ReadmeDocument {
 	
 	private String key;
 	private String path;	
-	private String content;
+	private String content;	
 	private Long lastModified;
-	
+	private String user;
+			
 	public static final String SYSTEM_FIELD_PREFIX = "_";
 	
 	public ReadmeDocument() {
@@ -29,14 +30,7 @@ public class ReadmeDocument {
 		this.path = path;
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
+	
 	public Long getLastModified() {
 		return lastModified;
 	}
@@ -45,8 +39,21 @@ public class ReadmeDocument {
 		this.lastModified = lastModified;
 	}
 
-			
-	
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String userName) {
+		this.user = userName;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 
 	
 }

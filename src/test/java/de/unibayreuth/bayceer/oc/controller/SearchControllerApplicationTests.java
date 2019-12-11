@@ -23,15 +23,15 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 		
 		given(web).param("query", q).param("start", 0).param("hitsPerPage",5)
 		.get("/{collection}/index",PUB_COL).then()
-		.assertThat().body("hits.size()", is(5)).and().body("totalHits", equalTo(12));
+		.assertThat().body("hits.size()", is(5)).and().body("totalHits", equalTo(11));
 						
 		given(web).param("query", q).param("start", 5).param("hitsPerPage",5)
 		.get("/{collection}/index",PUB_COL).then()
-		.assertThat().body("hits.size()", is(5)).and().body("totalHits", equalTo(12));
+		.assertThat().body("hits.size()", is(5)).and().body("totalHits", equalTo(11));
 		
 		given(web).param("query", q).param("start", 10).param("hitsPerPage",5)
 		.get("/{collection}/index",PUB_COL).then()
-		.assertThat().body("hits.size()",is(2)).and().body("totalHits", equalTo(12));
+		.assertThat().body("hits.size()",is(1)).and().body("totalHits", equalTo(11));
 		
 	}
 	
@@ -75,12 +75,40 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 		.param("start", 0)
 		.param("hitsPerPage", 10)
 		.param("fragmentSize",5)
-		.param("fields", "[\"creator\",\"publisher\"]")		
+		.param("fields", "[\"creator\",\"publisher\",\"_userName\"]")		
 		.param("filter", "{\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"]}")				
 		.get("/{collection}/index",PUB_COL).then().assertThat().body("hits.size()", is(2))
 		.and().body("totalHits", equalTo(2));
 	}
 	
+	
+	@Test 
+	public void terms() {		
+		given(web)
+		.filter(
+			document("terms-get", 
+				pathParameters(
+						parameterCollection				
+				),	
+				requestParameters( 
+						parameterWithName("query").description("https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html#simple-query-string-syntax[Simple query parser syntax]"),
+						parameterWithName("filter").description("Filter expression as JSON Map e.g.: {\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"],...}").optional(),
+						parameterWithName("maxHits").description("Max number of returned records").optional(),
+						parameterWithName("fragmentSize").description("Number of characters in each preview fragment").optional()
+																							
+				), 
+				responseFields( 
+						subsectionWithPath("[]").description("An array of hits").type(JsonFieldType.ARRAY)
+				)
+			)
+		)
+		.param("query", "Mag*")		
+		.param("maxHits", 10)
+		.param("fragmentSize",30)				
+		.param("filter", "{\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"]}")				
+		.get("/{collection}/terms",PUB_COL).then().statusCode(200);		
+		
+	}
 	
 
 	
