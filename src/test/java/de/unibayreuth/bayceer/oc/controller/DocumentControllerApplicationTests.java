@@ -61,7 +61,7 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 				)
 		)
 		.get("/{collection}/index/{key}",PUB_COL,"10").then().assertThat()
-		.body("content",equalTo("title:Secondary microplastics\ncreator:Lisa Simpson\npublisher:University of Calgary\n"));
+		.body("content",equalTo("title:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\n"));
 	}
 		
 	

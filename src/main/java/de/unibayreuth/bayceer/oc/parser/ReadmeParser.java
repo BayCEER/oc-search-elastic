@@ -30,6 +30,7 @@ public class ReadmeParser {
 
 	public static List<SimpleEntry<String, String>> parse(String content) throws ReadmeParserException {
 		List<SimpleEntry<String, String>> ret = new ArrayList<SimpleEntry<String, String>>(10);
+		
 		try (BufferedReader br = new BufferedReader(new StringReader(content))) {
 			String line;
 			Boolean onKey = false;
@@ -63,7 +64,6 @@ public class ReadmeParser {
 						}
 					}
 				}
-
 			}
 		} catch (IOException e) {
 			throw new ReadmeParserException(e.getMessage());
@@ -72,11 +72,17 @@ public class ReadmeParser {
 		return ret;
 	}
 	
-	public static Map<String,String> parseAsMap(String content) throws ReadmeParserException {				
-		Map<String,String> ret = new HashMap<String, String>();
+	public static Map<String,List<String>> parseAsMap(String content) throws ReadmeParserException {				
+		Map<String,List<String>> ret = new HashMap<String, List<String>>();
 		for (SimpleEntry<String, String> a : parse(content)) {
-			if (!a.getKey().startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX)) {
-				ret.put(a.getKey(), a.getValue());
+			if (!a.getKey().startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX)) {				
+				if (ret.containsKey(a.getKey())) {
+					ret.get(a.getKey()).add(a.getValue()); 
+				} else {
+					ArrayList<String> l = new ArrayList<String>();
+					l.add(a.getValue());
+					ret.put(a.getKey(), l);
+				}								
 			} else {
 				log.warn("Ignoring system field:{}",a.getKey());
 			}

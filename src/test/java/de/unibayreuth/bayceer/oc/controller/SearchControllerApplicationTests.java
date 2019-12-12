@@ -58,7 +58,7 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 						fieldWithPath("hits[].key").description("File identifier").type(JsonFieldType.STRING),
 						fieldWithPath("hits[].score").description("Match score").type(JsonFieldType.NUMBER),
 						fieldWithPath("hits[].path").description("File path").type(JsonFieldType.STRING),
-						fieldWithPath("hits[].previews").description("Hit highlighted text fragment").type(JsonFieldType.ARRAY),						
+						fieldWithPath("hits[].previews").description("Hit highlighted text fragment").type(JsonFieldType.OBJECT),						
 						fieldWithPath("hits[].thumb").description("Thumbnail").type(JsonFieldType.STRING).optional(),						
 						fieldWithPath("totalHits").description("The number of all hits found").type(JsonFieldType.NUMBER),
 						subsectionWithPath("aggs").description("An array of aggregation results").type(JsonFieldType.ARRAY).optional(),
@@ -93,18 +93,15 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 				requestParameters( 
 						parameterWithName("query").description("https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html#simple-query-string-syntax[Simple query parser syntax]"),
 						parameterWithName("filter").description("Filter expression as JSON Map e.g.: {\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"],...}").optional(),
-						parameterWithName("maxHits").description("Max number of returned records").optional(),
-						parameterWithName("fragmentSize").description("Number of characters in each preview fragment").optional()
-																							
+						parameterWithName("maxHits").description("Max number of returned records").optional()																													
 				), 
 				responseFields( 
 						subsectionWithPath("[]").description("An array of hits").type(JsonFieldType.ARRAY)
 				)
 			)
 		)
-		.param("query", "Mag*")		
-		.param("maxHits", 10)
-		.param("fragmentSize",30)				
+		.param("query", "Simp*")		
+		.param("maxHits", 10)					
 		.param("filter", "{\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"]}")				
 		.get("/{collection}/terms",PUB_COL).then().statusCode(200);		
 		

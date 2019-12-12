@@ -7,13 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import de.unibayreuth.bayceer.oc.parser.ReadmeParser;
-import de.unibayreuth.bayceer.oc.parser.ReadmeParserException;
 
 public class ReadmeParserTest {
 
@@ -63,7 +61,7 @@ public class ReadmeParserTest {
 	
 			
 	@Test
-	public void parseList() throws IOException, ReadmeParserException {	
+	public void parseAsList() throws IOException, ReadmeParserException {	
 		String content = new String(Files.readAllBytes(Paths.get("src/test/resources/READMEdc_list.txt")));
 		List<SimpleEntry<String, String>> dc = ReadmeParser.parse(content);
 		assertEquals(2,dc.size());
@@ -72,6 +70,17 @@ public class ReadmeParserTest {
 		assertEquals("creator", dc.get(1).getKey());
 		assertEquals("Stefan Holzheu", dc.get(1).getValue());
 	}
+	
+	@Test
+	public void parseAsMap() throws IOException, ReadmeParserException {	
+		String content = new String(Files.readAllBytes(Paths.get("src/test/resources/READMEdc_list.txt")));
+		Map<String,List<String>> dc = ReadmeParser.parseAsMap(content);		
+		assertEquals(1,dc.size());		
+		assertEquals(true, dc.get("creator").contains("Oliver Archner"));
+		assertEquals(true, dc.get("creator").contains("Stefan Holzheu"));
+		
+	}
+	
 	
 	
 	

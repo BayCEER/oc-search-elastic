@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<meta name="author" content="Version 1.1.0">
+<meta name="author" content="Version 1.1.3">
 <title>OC-Search elastic REST Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -423,7 +423,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>OC-Search elastic REST Documentation</h1>
 <div class="details">
-<span id="author" class="author">Version 1.1.0</span><br>
+<span id="author" class="author">Version 1.1.3</span><br>
 <span id="revdate">Oliver Archner</span>
 </div>
 <div id="toc" class="toc2">
@@ -644,7 +644,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Date: Wed, 11 Dec 2019 13:21:58 GMT</code></pre>
+Date: Thu, 12 Dec 2019 10:24:29 GMT</code></pre>
 </div>
 </div>
 </div>
@@ -741,10 +741,10 @@ Date: Wed, 11 Dec 2019 13:21:58 GMT</code></pre>
 {"key": "7","path":"SFB/Microplastics/Paris/README.dc","user":"bart", "content":"title:Secondary microplastics\ncreator:Bart Simpson\npublisher:University of Paris\n"},
 {"key": "8","path":"SFB/Microplastics/Berlin/README.dc","user":"maggie","content":"title:Secondary microplastics\ncreator:Maggie Simpson\npublisher:University of Berlin\n"},
 {"key": "9","path":"SFB/Microplastics/New York/README.dc","user":"bart","content":"title:Secondary microplastics\ncreator:Bart Simpson\npublisher:University of New York\n"},
-{"key": "10","path":"SFB/Microplastics/Calgary/README.dc","user":"lisa","content":"title:Secondary microplastics\ncreator:Lisa Simpson\npublisher:University of Calgary\n"},
+{"key": "10","path":"SFB/Microplastics/Calgary/README.dc","user":"lisa","content":"title:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\n"},
 {"key": "11","path":"SFB/Microplastics/Hamburg/README.dc","user":"marge", "content":"title:Secondary microplastics\ncreator:Marge Simpson\npublisher:University of Hamburg\n"},
 {"key": "12","path":"SFB/Microplastics/Bamberg/README.dc", "user":"homer","content":"title:Secondary microplastics\ncreator:Homer Simpson\npublisher:University of Bamberg\n"},
-{"key": "13","path":"REZ/Howtos/BayEOS/README.dc","user":"tom", "content":"title:Getting started with BayEOS\ncreator:Tom Tailor\npublisher:University of Nebraska\n"}
+{"key": "13","path":"REZ/Howtos/BayEOS/README.dc","user":"tom", "content":"title:Getting started with BayEOS\ncreator:Tom Tailor;Tim Tailor\npublisher:University of Nebraska\n"}
 ]
 '</code></pre>
 </div>
@@ -755,7 +755,7 @@ Date: Wed, 11 Dec 2019 13:21:58 GMT</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Date: Wed, 11 Dec 2019 13:22:14 GMT</code></pre>
+Date: Thu, 12 Dec 2019 10:24:45 GMT</code></pre>
 </div>
 </div>
 </div>
@@ -1002,7 +1002,7 @@ Date: Wed, 11 Dec 2019 13:22:14 GMT</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>hits[].previews</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Hit highlighted text fragment</p></td>
 </tr>
 <tr>
@@ -1068,12 +1068,12 @@ Date: Wed, 11 Dec 2019 13:22:14 GMT</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Date: Wed, 11 Dec 2019 13:22:15 GMT
+Date: Thu, 12 Dec 2019 10:24:46 GMT
+Content-Length: 655
 Content-Type: application/json;charset=UTF-8
 Transfer-Encoding: chunked
-Content-Length: 631
 
-{"hits":[{"key":"6","path":"SFB/Microplastics/WÃ¼rzburg/README.dc","previews":["&lt;mark&gt;Maggie&lt;/mark&gt;"],"score":1.6486585,"thumb":null},{"key":"8","path":"SFB/Microplastics/Berlin/README.dc","previews":["&lt;mark&gt;Maggie&lt;/mark&gt;"],"score":1.6486585,"thumb":null}],"totalHits":2,"aggs":[{"key":"creator","sumOtherDocCount":0,"results":[{"key":"Maggie Simpson","count":2}],"title":"Creator (1)"},{"key":"_userName","sumOtherDocCount":0,"results":[],"title":"UserName (0)"},{"key":"publisher","sumOtherDocCount":0,"results":[{"key":"University of Berlin","count":1},{"key":"University of WÃ¼rzburg","count":1}],"title":"Publisher (2)"}]}</code></pre>
+{"hits":[{"key":"6","path":"SFB/Microplastics/WÃ¼rzburg/README.dc","previews":{"creator":["&lt;mark&gt;Maggie&lt;/mark&gt;"]},"score":1.7509891,"thumb":null},{"key":"8","path":"SFB/Microplastics/Berlin/README.dc","previews":{"creator":["&lt;mark&gt;Maggie&lt;/mark&gt;"]},"score":1.7509891,"thumb":null}],"totalHits":2,"aggs":[{"key":"creator","sumOtherDocCount":0,"results":[{"key":"Maggie Simpson","count":2}],"title":"Creator (1)"},{"key":"_userName","sumOtherDocCount":0,"results":[],"title":"UserName (0)"},{"key":"publisher","sumOtherDocCount":0,"results":[{"key":"University of Berlin","count":1},{"key":"University of WÃ¼rzburg","count":1}],"title":"Publisher (2)"}]}</code></pre>
 </div>
 </div>
 </div>
@@ -1168,12 +1168,12 @@ Content-Length: 631
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Date: Thu, 12 Dec 2019 10:24:25 GMT
+Content-Length: 204
 Content-Type: application/json;charset=UTF-8
-Content-Length: 190
-Date: Wed, 11 Dec 2019 13:21:53 GMT
 Transfer-Encoding: chunked
 
-{"key":"10","path":"SFB/Microplastics/Calgary/README.dc","content":"title:Secondary microplastics\ncreator:Lisa Simpson\npublisher:University of Calgary\n","lastModified":null,"user":"lisa"}</code></pre>
+{"key":"10","path":"SFB/Microplastics/Calgary/README.dc","content":"title:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\n","lastModified":null,"user":"lisa"}</code></pre>
 </div>
 </div>
 </div>
@@ -1249,7 +1249,7 @@ Transfer-Encoding: chunked
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Length: 54
-Date: Wed, 11 Dec 2019 13:22:03 GMT
+Date: Thu, 12 Dec 2019 10:24:34 GMT
 Content-Type: application/json;charset=UTF-8
 Transfer-Encoding: chunked
 
@@ -1311,10 +1311,6 @@ Transfer-Encoding: chunked
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxHits</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Max number of returned records</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fragmentSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Number of characters in each preview fragment</p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -1346,7 +1342,7 @@ Transfer-Encoding: chunked
 <h4 id="resources-terms-get_curl_request"><a class="link" href="#resources-terms-get_curl_request">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/oc-search-public/terms?query=Mag*&amp;maxHits=10&amp;fragmentSize=30&amp;filter=%7B%22creator%22%3A%5B%22Maggie%20Simpson%22%2C%22Bart%20Simpson%22%5D%7D' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/oc-search-public/terms?query=Simp*&amp;maxHits=10&amp;filter=%7B%22creator%22%3A%5B%22Maggie%20Simpson%22%2C%22Bart%20Simpson%22%5D%7D' -i -X GET \
     -H 'Accept: application/json' \
     -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
 </div>
@@ -1357,12 +1353,12 @@ Transfer-Encoding: chunked
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Content-Length: 10
-Date: Wed, 11 Dec 2019 13:22:14 GMT
+Content-Length: 11
+Date: Thu, 12 Dec 2019 10:24:45 GMT
 Content-Type: application/json;charset=UTF-8
 Transfer-Encoding: chunked
 
-["Maggie"]</code></pre>
+["Simpson"]</code></pre>
 </div>
 </div>
 </div>
@@ -1485,7 +1481,7 @@ Transfer-Encoding: chunked
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Date: Wed, 11 Dec 2019 13:22:07 GMT</code></pre>
+Date: Thu, 12 Dec 2019 10:24:38 GMT</code></pre>
 </div>
 </div>
 </div>
@@ -1532,7 +1528,7 @@ Date: Wed, 11 Dec 2019 13:22:07 GMT</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Date: Wed, 11 Dec 2019 13:22:09 GMT</code></pre>
+Date: Thu, 12 Dec 2019 10:24:40 GMT</code></pre>
 </div>
 </div>
 </div>
@@ -1656,7 +1652,7 @@ All image data is transferred in PNG (image/png) format.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Date: Wed, 11 Dec 2019 13:22:09 GMT</code></pre>
+Date: Thu, 12 Dec 2019 10:24:40 GMT</code></pre>
 </div>
 </div>
 </div>
@@ -1703,7 +1699,7 @@ Date: Wed, 11 Dec 2019 13:22:09 GMT</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Date: Wed, 11 Dec 2019 13:22:09 GMT</code></pre>
+Date: Thu, 12 Dec 2019 10:24:40 GMT</code></pre>
 </div>
 </div>
 </div>
@@ -1713,7 +1709,7 @@ Date: Wed, 11 Dec 2019 13:22:09 GMT</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-12-11 02:46:24 MEZ
+Last updated 2019-12-11 02:49:42 MEZ
 </div>
 </div>
 </body>

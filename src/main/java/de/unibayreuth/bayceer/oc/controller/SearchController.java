@@ -66,13 +66,14 @@ public class SearchController {
 	private static final String EMPTY_MAP = "{}";
 	private static final int TERM_BUCKET_SIZE = 10;
 	private static final String HIGHLIGHT_TAG = "mark";
+	private static final String FRA_SIZE = "100";
 
 	@GetMapping(value = "/{collection}/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Response search(@PathVariable String collection,
 			@RequestParam(value = "query", defaultValue = "") String queryString,
 			@RequestParam(value = "start", defaultValue = "0") int start,
 			@RequestParam(value = "hitsPerPage", defaultValue = "10") int hitsPerPage,
-			@RequestParam(value = "fragmentSize", defaultValue = "20") int fragmentSize,
+			@RequestParam(value = "fragmentSize", defaultValue = FRA_SIZE) int fragmentSize,
 			@RequestParam(value = "fields", defaultValue = EMPTY_ARRAY) String fields, // ['creator','publisher']
 			@RequestParam(value = "filter", defaultValue = EMPTY_MAP) String filter // {"creator":["Maggie
 																					// Simpson","Bart
@@ -110,11 +111,14 @@ public class SearchController {
 		for (SearchHit sh : hits.getHits()) {
 			String key = sh.getId();
 			// Previews
-			List<String> previews = new ArrayList<String>();
+			Map<String,List<String>> previews = new HashMap<String, List<String>>();
 			sh.getHighlightFields().forEach((f, v) -> {
 				if (!(f.startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX) || f.endsWith(".keyword"))) {
-					for (Text t : v.fragments()) {
-						previews.add(t.string());
+					for (Text t : v.fragments()) {																		
+						if (!previews.containsKey(f)) {
+							previews.put(f, new ArrayList<String>());							
+						} 
+						previews.get(f).add(t.string());						
 					}
 				}
 			});
@@ -156,16 +160,16 @@ public class SearchController {
 	public List<String> terms(@PathVariable String collection,
 			@RequestParam(value = "query", defaultValue = "") String queryString,
 			@RequestParam(value = "filter", defaultValue = EMPTY_MAP) String filter,
-			@RequestParam(value = "maxHits", defaultValue = "10") int maxHits,
-			@RequestParam(value = "fragmentSize", defaultValue = "20") int fragmentSize) throws IOException {
+			@RequestParam(value = "maxHits", defaultValue = "10") int maxHits
+			) throws IOException {
 
 		log.debug("Collection:{} Query:{} Filter:{} MaxHits:{}", collection, queryString, filter, maxHits);
-		Pattern emPattern = Pattern.compile(String.format("<%s>(.+)</%s>",HIGHLIGHT_TAG,HIGHLIGHT_TAG));
+		Pattern emPattern = Pattern.compile(String.format("<%s>([^<]+)<\\/%s>",HIGHLIGHT_TAG,HIGHLIGHT_TAG));
 			
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.size(maxHits);
 		searchSourceBuilder.query(getQueryBuilder(queryString, filter));
-		searchSourceBuilder.highlighter(getHighlighter(fragmentSize));
+		searchSourceBuilder.highlighter(getHighlighter(Integer.valueOf(FRA_SIZE)));
 		SearchRequest searchRequest = new SearchRequest(collection);
 		searchRequest.source(searchSourceBuilder);
 
@@ -173,15 +177,22 @@ public class SearchController {
 		SearchHits hits = searchResponse.getHits();
 
 		Map<String, Integer> matches = new HashMap<String, Integer>();
+		
 		for (SearchHit sh : hits.getHits()) {
 			sh.getHighlightFields().forEach((f, v) -> {
 				if (!(f.startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX) || f.endsWith(".keyword"))) {
 					for (Text t : v.getFragments()) {
 						Matcher match = emPattern.matcher(t.string());
 						while (match.find()) {
-							String m = match.group(1);
-							Integer c = matches.get(m);
-							matches.put(m, (c == null) ? 0 : c++);
+							String m = match.group(1);							
+							if (matches.containsKey(m)) {
+								Integer count = matches.get(m) + 1;
+								matches.put(m,count);								
+							} else {
+								matches.put(m,1);	
+							}
+							
+							
 						}
 					}
 				}

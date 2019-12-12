@@ -1,11 +1,12 @@
 package de.unibayreuth.bayceer.oc.entity;
 
 import java.util.List;
+import java.util.Map;
 
 public class Hit {
 	private String key;
 	private String path;
-	private List<String> previews;
+	private Map<String,List<String>> previews;
 	private Float score;
 	private byte[] thumb;
 
@@ -13,7 +14,7 @@ public class Hit {
 
 	}
 
-	public Hit(String key, Float score, String path, List<String> previews, byte[] thumb) {
+	public Hit(String key, Float score, String path, Map<String,List<String>> previews, byte[] thumb) {
 		super();
 		this.key = key;
 		this.score = score;
@@ -30,10 +31,7 @@ public class Hit {
 		return path;
 	}
 
-	public List<String> getPreviews() {
-		return previews;
-	}
-
+	
 	public Float getScore() {
 		return score;
 	}
@@ -50,15 +48,20 @@ public class Hit {
 		this.path = path;
 	}
 
-	public void setPreviews(List<String> previews) {
-		this.previews = previews;
-	}
-
+	
 	public void setScore(Float score) {
 		this.score = score;
 	}
 
 	public void setThumb(byte[] thumb) {
 		this.thumb = thumb;
+	}
+
+	public Map<String, List<String>> getPreviews() {
+		return previews;
+	}
+
+	public void setPreviews(Map<String, List<String>> previews) {
+		this.previews = previews;
 	}
 }
