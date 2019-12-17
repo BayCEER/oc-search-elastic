@@ -1,15 +1,21 @@
 # READMEdc File Specification
-Version 2019-12-09
+Version 2019-12-17
 
 ---
 
-1. Naming Convention 
+1. File Name Convention 
     - Scope
         + Public: __READMEdc.txt__
         + Private: __READMEdc.private.txt__
     - Sorting 
         __ prefixing can be used to bring README files to a front file list position
-1. Content    
+2. Content    
+    2.1 _Comments_
+    - Lines starting with a hash sign (#) are identified as a comment. All the text from the hash sign to the end of the line is ignored.
+        ```properties
+        # This is a comment         
+        ```
+    2.2 _Keys_
     - The content is represented as key:value pairs on one line:
         ```properties
         key:value
@@ -29,7 +35,11 @@ Version 2019-12-09
         ```
     - Keys with with empty values are ignored
     - All key names with preceding _ are reserved for system use 
+
+    2.3 _Separator_
     - A colon separates key and value
+
+    2.4 _Values_
     - A value is considered to be terminated by any one of a line feed ('\n'), a carriage return ('\r'), or a carriage return followed immediately by a linefeed.
     - Multiline values can be indented with spaces:
         ```properties 
@@ -37,17 +47,16 @@ Version 2019-12-09
          Line2
          Line3
         ```
-    - All value information is treated as text
+    - Text and Numeric value types are detected automatically 
+    - Date values must be formated as `yyyy/MM/dd` in UTC
+    - Time values must be formated as `yyyy/MM/dd HH:mm:ss` in UTC
     - Multiple values for one key can be separated with a semicolon:
         ```properties
         key: value1; value2
         ```      
-    - Lines starting with a hash sign (#) are identified as a comment. All the text from the hash sign to the end of the line is ignored.
-        ```properties
-        # This is a comment         
-        ```
-
-1. Example READMEdc.txt using a basic [Dublin Core](https://www.dublincore.org/) metadata schema:
+    
+3. Example READMEdc.txt 
+The following file content is based on the [Dublin Core](https://www.dublincore.org/) metadata schema:
     ```properties
     title:Getting started on BayCEER CLOUD
     creator:Oliver Archner; Stefan Holzheu
