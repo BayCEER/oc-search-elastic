@@ -48,8 +48,8 @@ Version 2019-12-17
          Line3
         ```
     - Text and Numeric value types are detected automatically 
-    - Date values must be formated as `yyyy/MM/dd` in UTC
-    - Time values must be formated as `yyyy/MM/dd HH:mm:ss` in UTC
+    - Date values format: `yyyy/MM/dd` 
+    - Time values format: `yyyy/MM/dd HH:mm:ss` in UTC
     - Multiple values for one key can be separated with a semicolon:
         ```properties
         key: value1; value2
@@ -68,7 +68,7 @@ The following file content is based on the [Dublin Core](https://www.dublincore.
       Demo 
     publisher:University of Bayreuth
     contributor:BayCEER IT Group
-    date:2019-01-10
+    date:2019/01/10
     type:Text
     format:Markdown
     identifier:

@@ -18,13 +18,13 @@ import de.unibayreuth.bayceer.oc.entity.ReadmeDocument;
 
 public class ReadmeParser {
 
-	// https://regex101.com/
-	// Matches all key values
-		
+				
 	public static final String START_COMMENT_CHAR = "#";
 	public static final String LIST_SEPERATOR = ";";
 
-	private static final Pattern p = Pattern.compile("^(.+):(.*)");
+	
+	// Verified on https://regex101.com/
+	private static final Pattern p = Pattern.compile("([^:]*):(.*)");
 	
 	private static Logger log = LoggerFactory.getLogger(ReadmeParser.class);
 
@@ -32,43 +32,38 @@ public class ReadmeParser {
 		List<SimpleEntry<String, String>> ret = new ArrayList<SimpleEntry<String, String>>(10);
 		
 		try (BufferedReader br = new BufferedReader(new StringReader(content))) {
-			String line;
-			Boolean onKey = false;
+			String line;			
 			while ((line = br.readLine()) != null) {
-				Matcher matcher = p.matcher(line);
-				if (matcher.matches()) {
-					String key = matcher.group(1).trim();
-					String value = matcher.group(2).trim();
-					if (value.isEmpty() || key.isEmpty()) {
-						onKey = false;
-					} else {
-						if (value.contains(LIST_SEPERATOR)) {
-							for(String e :value.split(LIST_SEPERATOR)) {
-								ret.add(new SimpleEntry<String, String>(key, e.trim()));
-							}							
-						} else {
-							ret.add(new SimpleEntry<String, String>(key, value));	
-						}						
-						onKey = true;
+				// Skip Comments 
+				if (!line.trim().startsWith(START_COMMENT_CHAR)) {					
+					// Handle Block
+					if (line.startsWith(" ") && ret.size()>0) {						
+						SimpleEntry<String, String> lastEntry = ret.get(ret.size() - 1);
+						StringBuffer b = new StringBuffer(lastEntry.getValue());
+						b.append("\n");
+						b.append(line.trim());
+						lastEntry.setValue(b.toString());												
+					} else {						
+						Matcher matcher = p.matcher(line);
+						if (matcher.matches()) {
+							String key = matcher.group(1).trim();
+							String value = matcher.group(2).trim();
+							if (!(value.isEmpty() || key.isEmpty())) {								
+								if (value.contains(LIST_SEPERATOR)) {
+									for(String e :value.split(LIST_SEPERATOR)) {
+										ret.add(new SimpleEntry<String, String>(key, e.trim()));
+									}							
+								} else {
+									ret.add(new SimpleEntry<String, String>(key, value));	
+								}
+							}
+						} 																		
 					}
-				} else {
-					// Ignoring comments 
-					if (!line.trim().startsWith(START_COMMENT_CHAR)) {					
-						// Handle values spanning many lines  
-						if (ret.size() > 0 && onKey) {
-							SimpleEntry<String, String> lastEntry = ret.get(ret.size() - 1);
-							StringBuffer b = new StringBuffer(lastEntry.getValue());
-							b.append("\n");
-							b.append(line);
-							lastEntry.setValue(b.toString());
-						}
-					}
-				}
+				}							
 			}
 		} catch (IOException e) {
 			throw new ReadmeParserException(e.getMessage());
 		}
-
 		return ret;
 	}
 	

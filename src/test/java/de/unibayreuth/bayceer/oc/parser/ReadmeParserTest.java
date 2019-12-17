@@ -41,12 +41,11 @@ public class ReadmeParserTest {
 	public void parseMultilineKey() throws IOException, ReadmeParserException {
 		String content = new String(Files.readAllBytes(Paths.get("src/test/resources/READMEdc_multilinekey.txt")));		
 		List<SimpleEntry<String, String>> dc = ReadmeParser.parse(content);
-		assertEquals(2,dc.size());
+		assertEquals(1,dc.size());
 		assertEquals("title", dc.get(0).getKey());
-		assertEquals("Line1\n\tLine2", dc.get(0).getValue());
+		assertEquals("Line1\nLine2", dc.get(0).getValue());
 		
-		assertEquals("author", dc.get(1).getKey());
-		assertEquals("Nobody", dc.get(1).getValue());
+		
 		
 	}
 	
@@ -77,7 +76,15 @@ public class ReadmeParserTest {
 		Map<String,List<String>> dc = ReadmeParser.parseAsMap(content);		
 		assertEquals(1,dc.size());		
 		assertEquals(true, dc.get("creator").contains("Oliver Archner"));
-		assertEquals(true, dc.get("creator").contains("Stefan Holzheu"));
+		assertEquals(true, dc.get("creator").contains("Stefan Holzheu"));		
+	}
+	
+	@Test
+	public void parseColonValue() throws IOException, ReadmeParserException {
+		String content = "creator: Oliver:Archner";
+		List<SimpleEntry<String, String>> dc = ReadmeParser.parse(content);
+		assertEquals(1,dc.size());		
+		assertEquals("Oliver:Archner", dc.get(0).getValue());
 		
 	}
 	
