@@ -55,7 +55,7 @@ Version 2019-12-17
         key: value1; value2
         ```      
     
-3. Example READMEdc.txt 
+3. Example READMEdc.txt  
 The following file content is based on the [Dublin Core](https://www.dublincore.org/) metadata schema:
     ```properties
     title:Getting started on BayCEER CLOUD
