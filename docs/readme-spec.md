@@ -48,8 +48,8 @@ Version 2019-12-17
          Line3
         ```
     - Text and Numeric value types are detected automatically 
-    - Date values format: `yyyy/MM/dd` 
-    - Time values format: `yyyy/MM/dd HH:mm:ss` in UTC
+    - Date value format: `yyyy/MM/dd` in UTC
+    - Time value format: `yyyy/MM/dd HH:mm:ss` in UTC
     - Multiple values for one key can be separated with a semicolon:
         ```properties
         key: value1; value2

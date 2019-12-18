@@ -61,7 +61,7 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 				)
 		)
 		.get("/{collection}/index/{key}",PUB_COL,"10").then().assertThat()
-		.body("content",equalTo("title:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\n"));
+		.body("content",equalTo("id:10\ntitle:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\ndate:2019/10/10"));
 	}
 		
 	
@@ -82,7 +82,7 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 		.put("/{collection}/index/{key}",PUB_COL,"2")
 		.then()
 		.statusCode(200);				
-		given(web).get("/{collection}/index/{key}",PUB_COL,"2").then().assertThat().body("content",equalTo("title:Ternary microplastics\ncreator:Marge Simpson\npublisher:University of Munich\n"));	
+		given(web).get("/{collection}/index/{key}",PUB_COL,"2").then().assertThat().body("content",equalTo("id:2\ntitle:Ternary microplastics\ncreator:Marge Simpson\npublisher:University of Munich\ndate:2019/10/10"));	
 	}
 		
 		

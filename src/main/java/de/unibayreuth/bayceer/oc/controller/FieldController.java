@@ -2,6 +2,7 @@ package de.unibayreuth.bayceer.oc.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,9 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.GetFieldMappingsRequest;
+import org.elasticsearch.client.indices.GetFieldMappingsResponse;
+import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.client.indices.GetMappingsRequest;
 import org.elasticsearch.client.indices.GetMappingsResponse;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
@@ -27,7 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 import de.unibayreuth.bayceer.oc.entity.ReadmeDocument;
 
 @RestController
+@SuppressWarnings("unchecked")
 public class FieldController {
+	
 	@Autowired
 	RestHighLevelClient client;
 	
@@ -39,7 +45,7 @@ public class FieldController {
 		List<String> fields = new ArrayList<String>();
 						
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();		
-		mapping(collection).forEach((key,value) -> {
+		properties(collection).forEach((key,value) -> {
 			if ( !(key.startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX)&&(!sysFields))) {
 				searchSourceBuilder.aggregation(AggregationBuilders.count(key).field(key + ".keyword"));
 			}			
@@ -59,15 +65,27 @@ public class FieldController {
 		return fields;
 	}
 	
+			
 	
-	@SuppressWarnings("unchecked")
-	private Map<String,Object> mapping(String collection) throws IOException{		
-		GetMappingsRequest req = new GetMappingsRequest();
-		req.indices(collection);
-		GetMappingsResponse resp = client.indices().getMapping(req, RequestOptions.DEFAULT);				 
-		MappingMetaData indexMapping = resp.mappings().get(collection); 								
-		return (Map<String, Object>) indexMapping.sourceAsMap().get("properties");		
+	public Map<String,Object> properties(String collection) throws IOException{				
+		if (client.indices().exists(new GetIndexRequest(collection),RequestOptions.DEFAULT)) {
+			GetMappingsRequest req = new GetMappingsRequest();
+			req.indices(collection);
+			GetMappingsResponse resp = client.indices().getMapping(req, RequestOptions.DEFAULT);				 
+			MappingMetaData indexMapping = resp.mappings().get(collection); 								
+			return (Map<String, Object>) indexMapping.sourceAsMap().get("properties");
+		} else {
+			  return new HashMap<String, Object>();
+		}
 	}
-	
 		
+	public Map<String,String> types(String collection) throws IOException {	
+		Map<String,String> ret = new HashMap<String, String>();
+		properties(collection).forEach((k,v) -> {						
+				Map<String,Object> prop = (Map<String, Object>) v;
+				ret.put(k,prop.get("type").toString());			
+		});
+		return ret;
+	}
+				
 }

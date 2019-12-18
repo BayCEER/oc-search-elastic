@@ -1,14 +1,14 @@
 [
-{"key": "2","path":"SFB/Microplastics/München/README.dc", "user":"marge", "content":"title:Primary microplastics\ncreator:Marge Simpson\npublisher:University of Munich\n"},
-{"key": "3","path":"SFB/Microplastics/Regensburg/README.dc","user":"bart", "content":"title:Primary microplastics\ncreator:Bart Simpson\npublisher:University of Regensburg\n"},
-{"key": "4","path":"SFB/Microplastics/Landshut/README.dc","user":"bart","content":"title:Primary microplastics\ncreator:Bart Simpson\npublisher:University of Landshut\n"},
-{"key": "5","path":"SFB/Microplastics/Freising/README.dc","user":"lisa", "content":"title:Primary microplastics\ncreator:Lisa Simpson\npublisher:University of Freising\n"},
-{"key": "6","path":"SFB/Microplastics/Würzburg/README.dc","user":"maggie", "content":"title:Primary microplastics\ncreator:Maggie Simpson\npublisher:University of Würzburg\n"},
-{"key": "7","path":"SFB/Microplastics/Paris/README.dc","user":"bart", "content":"title:Secondary microplastics\ncreator:Bart Simpson\npublisher:University of Paris\n"},
-{"key": "8","path":"SFB/Microplastics/Berlin/README.dc","user":"maggie","content":"title:Secondary microplastics\ncreator:Maggie Simpson\npublisher:University of Berlin\n"},
-{"key": "9","path":"SFB/Microplastics/New York/README.dc","user":"bart","content":"title:Secondary microplastics\ncreator:Bart Simpson\npublisher:University of New York\n"},
-{"key": "10","path":"SFB/Microplastics/Calgary/README.dc","user":"lisa","content":"title:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\n"},
-{"key": "11","path":"SFB/Microplastics/Hamburg/README.dc","user":"marge", "content":"title:Secondary microplastics\ncreator:Marge Simpson\npublisher:University of Hamburg\n"},
-{"key": "12","path":"SFB/Microplastics/Bamberg/README.dc", "user":"homer","content":"title:Secondary microplastics\ncreator:Homer Simpson\npublisher:University of Bamberg\n"},
-{"key": "13","path":"REZ/Howtos/BayEOS/README.dc","user":"tom", "content":"title:Getting started with BayEOS\ncreator:Tom Tailor;Tim Tailor\npublisher:University of Nebraska\n"}
+{"key": "2","path":"SFB/Microplastics/München/README.dc", "user":"marge", "content":"id:2\ntitle:Primary microplastics\ncreator:Marge Simpson\npublisher:University of Munich\ndate:2019/10/10"},
+{"key": "3","path":"SFB/Microplastics/Regensburg/README.dc","user":"bart", "content":"id:3\ntitle:Primary microplastics\ncreator:Bart Simpson\npublisher:University of Regensburg\ndate:2019/10/10"},
+{"key": "4","path":"SFB/Microplastics/Landshut/README.dc","user":"bart","content":"id:4\ntitle:Primary microplastics\ncreator:Bart Simpson\npublisher:University of Landshut\ndate:2019/10/10"},
+{"key": "5","path":"SFB/Microplastics/Freising/README.dc","user":"lisa", "content":"id:5\ntitle:Primary microplastics\ncreator:Lisa Simpson\npublisher:University of Freising\ndate:2019/10/10"},
+{"key": "6","path":"SFB/Microplastics/Würzburg/README.dc","user":"maggie", "content":"id:6\ntitle:Primary microplastics\ncreator:Maggie Simpson\npublisher:University of Würzburg\ndate:2019/10/10"},
+{"key": "7","path":"SFB/Microplastics/Paris/README.dc","user":"bart", "content":"id:7\ntitle:Secondary microplastics\ncreator:Bart Simpson\npublisher:University of Paris\ndate:2019/10/10"},
+{"key": "8","path":"SFB/Microplastics/Berlin/README.dc","user":"maggie","content":"id:8\ntitle:Secondary microplastics\ncreator:Maggie Simpson\npublisher:University of Berlin\ndate:2019/10/10"},
+{"key": "9","path":"SFB/Microplastics/New York/README.dc","user":"bart","content":"id:9\ntitle:Secondary microplastics\ncreator:Bart Simpson\npublisher:University of New York\ndate:2019/10/10"},
+{"key": "10","path":"SFB/Microplastics/Calgary/README.dc","user":"lisa","content":"id:10\ntitle:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\ndate:2019/10/10"},
+{"key": "11","path":"SFB/Microplastics/Hamburg/README.dc","user":"marge", "content":"id:11\ntitle:Secondary microplastics\ncreator:Marge Simpson\npublisher:University of Hamburg\ndate:2019/10/10"},
+{"key": "12","path":"SFB/Microplastics/Bamberg/README.dc", "user":"homer","content":"id:12\ntitle:Secondary microplastics\ncreator:Homer Simpson\npublisher:University of Bamberg\ndate:2019/10/10"},
+{"key": "13","path":"REZ/Howtos/BayEOS/README.dc","user":"tom", "content":"id:13\ntitle:Getting started with BayEOS\ncreator:Tom Tailor;Tim Tailor\npublisher:University of Nebraska\ndate:2019/10/10"}
 ]

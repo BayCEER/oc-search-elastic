@@ -41,6 +41,9 @@ public class DocumentController {
 
 	@Autowired
 	RestHighLevelClient client;
+	
+	@Autowired
+	FieldController fieldController;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());	
 		
@@ -48,10 +51,12 @@ public class DocumentController {
 	@PostMapping(value = "/{collection}/index/{key}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void indexDocument(@PathVariable String collection, @PathVariable String key, @RequestBody ReadmeDocument doc)
 			throws IOException, ReadmeParserException {
+		
 		log.debug("Index doc:{} collection:{} path:{}", key, collection, doc.getPath());		
+				
+		Map<String,Object> s = ReadmeMapAdapter.toMap(doc,fieldController.types(collection));				
 		IndexRequest req = new IndexRequest(collection);
-		req.id(key);				
-		Map<String,Object> s = ReadmeMapAdapter.toMap(doc);	
+		req.id(key);								
 		req.source(s);				
 		IndexResponse res = client.index(req, RequestOptions.DEFAULT);
 		Result result = res.getResult();
@@ -93,10 +98,11 @@ public class DocumentController {
 	public void indexBulk(@PathVariable String collection, @RequestBody List<ReadmeDocument> docs)
 			throws IOException, ReadmeParserException {
 		log.debug("Bulk loading {} docs to collection:{}",docs.size(),collection);
+		Map<String,String> mapping = fieldController.types(collection);
 		BulkRequest req = new BulkRequest();
 		for (ReadmeDocument doc : docs) {
 			IndexRequest ireq = new IndexRequest(collection);			
-			Map<String,Object> s = ReadmeMapAdapter.toMap(doc);										
+			Map<String,Object> s = ReadmeMapAdapter.toMap(doc,mapping);										
 			ireq.id(doc.getKey()).source(s);
 			req.add(ireq);
 		}

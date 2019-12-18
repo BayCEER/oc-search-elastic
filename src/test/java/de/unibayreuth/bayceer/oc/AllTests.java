@@ -14,8 +14,8 @@ import de.unibayreuth.bayceer.oc.controller.SearchControllerApplicationTests;
 	DocumentControllerApplicationTests.class,
 	FieldControllerApplicationTests.class,
 	ImageControllerApplicationTests.class,
-	SearchControllerApplicationTests.class
+	SearchControllerApplicationTests.class	
 })
-public class ControllerIntegrationTestSuite {
+public class AllTests {
 
 }
