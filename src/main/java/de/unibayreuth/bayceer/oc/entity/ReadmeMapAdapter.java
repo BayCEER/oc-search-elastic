@@ -1,11 +1,13 @@
 package de.unibayreuth.bayceer.oc.entity;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.unibayreuth.bayceer.oc.parser.ReadmeParser;
@@ -30,13 +32,22 @@ public class ReadmeMapAdapter {
 		s.put(lastModified, d.getLastModified());
 		s.put(user, d.getUser());
 		s.put(content, d.getContent());		
-		for(SimpleEntry<String, String> e:ReadmeParser.parse(d.getContent())) {					
-			if (mapping.containsKey(e.getKey()) && !TypeValidator.isValid(e.getValue(),mapping.get(e.getKey()))) {				
-				log.warn("Key:{} type:{} value:{} is invalid.",e.getKey(),mapping.get(e.getKey()),e.getValue());								
-			} else {
-				s.put(e.getKey(), e.getValue());
+						
+		// Filter out invalid entries
+		Map<String,List<String>> co = new HashMap<String, List<String>>();
+		ReadmeParser.parseAsMap(d.getContent()).forEach((_key,_list) -> {
+			List<String> tl = new ArrayList<String>();
+			for(String value:_list) {			
+				if ( mapping.containsKey(_key) && (!TypeValidator.isValid(value, mapping.get(_key))) ){
+					log.warn("Key:{} type:{} value:{} is invalid.",_key,mapping.get(_key),value);
+				} else {
+					tl.add(value);
+				}
 			}
-		}								
+			co.put(_key,tl);						
+		});
+		s.putAll(co);
+		
 		return s;
 	}
 
