@@ -8,7 +8,10 @@ _A microservice to index and search metadata information in ownCloud_
 + [Search UI Prototype](https://github.com/BayCEER/oc-search-ui)
 + [REST API Documentation](https://bayceer.github.io/oc-search-elastic/rest-api.html)
 
-## History 
+## History
+### Version 1.1.9, March, 2020
+- Fixed null values in search 
+
 ### Version 1.1.8, January, 2020
 - Fixed multi value bug
 

@@ -83,6 +83,14 @@ public class SearchController {
 		log.debug("Collection:{} Query:{} Start:{} HitsPerPage:{} FragmentSize:{} Fields:{} Filter:{}", collection,
 				queryString, start, hitsPerPage, fragmentSize, fields, filter);
 
+		// Validation 		
+		if (fields.equalsIgnoreCase("null")) {
+			fields = EMPTY_ARRAY;			
+		}		
+		if (filter.equalsIgnoreCase("null")) {
+			filter = EMPTY_MAP;			
+		}		
+		
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.from(start);
 		searchSourceBuilder.size(hitsPerPage);
