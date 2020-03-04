@@ -39,13 +39,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.unibayreuth.bayceer.oc.controller.ImageController.ImageType;
 import de.unibayreuth.bayceer.oc.entity.AggResponse;
+import de.unibayreuth.bayceer.oc.entity.Converter;
 import de.unibayreuth.bayceer.oc.entity.Hit;
 import de.unibayreuth.bayceer.oc.entity.ReadmeDocument;
 import de.unibayreuth.bayceer.oc.entity.Response;
@@ -64,9 +62,11 @@ public class SearchController {
 
 	private static final String EMPTY_ARRAY = "[]";
 	private static final String EMPTY_MAP = "{}";
+	
 	private static final int TERM_BUCKET_SIZE = 10;
 	private static final String HIGHLIGHT_TAG = "mark";
 	private static final String FRA_SIZE = "100";
+
 
 	@GetMapping(value = "/{collection}/index", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Response search(@PathVariable String collection,
@@ -75,21 +75,16 @@ public class SearchController {
 			@RequestParam(value = "hitsPerPage", defaultValue = "10") int hitsPerPage,
 			@RequestParam(value = "fragmentSize", defaultValue = FRA_SIZE) int fragmentSize,
 			@RequestParam(value = "fields", defaultValue = EMPTY_ARRAY) String fields, // ['creator','publisher']
-			@RequestParam(value = "filter", defaultValue = EMPTY_MAP) String filter // {"creator":["Maggie
-																					// Simpson","Bart
-																					// Simpson"],"publisher":[]}]
+			@RequestParam(value = "filter", defaultValue = EMPTY_MAP) String filter // {"creator":["Maggie Simpson","Bart Simpson"],"publisher":[]}]
 	) throws ParseException, IOException {
+		
+		fields = (fields.equalsIgnoreCase("null"))?EMPTY_ARRAY:fields;
+		filter = (filter.equalsIgnoreCase("null"))?EMPTY_MAP:filter;
+		
 
 		log.debug("Collection:{} Query:{} Start:{} HitsPerPage:{} FragmentSize:{} Fields:{} Filter:{}", collection,
 				queryString, start, hitsPerPage, fragmentSize, fields, filter);
-
-		// Validation 		
-		if (fields.equalsIgnoreCase("null")) {
-			fields = EMPTY_ARRAY;			
-		}		
-		if (filter.equalsIgnoreCase("null")) {
-			filter = EMPTY_MAP;			
-		}		
+				
 		
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.from(start);
@@ -122,11 +117,11 @@ public class SearchController {
 			Map<String,List<String>> previews = new HashMap<String, List<String>>();
 			sh.getHighlightFields().forEach((f, v) -> {
 				if (!(f.startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX) || f.endsWith(".keyword"))) {
-					for (Text t : v.fragments()) {																		
+					for (Text t : v.fragments()) {
 						if (!previews.containsKey(f)) {
-							previews.put(f, new ArrayList<String>());							
-						} 
-						previews.get(f).add(t.string());						
+							previews.put(f, new ArrayList<String>());
+						}
+						previews.get(f).add(t.string());
 					}
 				}
 			});
@@ -159,7 +154,7 @@ public class SearchController {
 				ar.buildTitle();
 				ares.add(ar);
 			}
-		}
+		}	
 		r.setAggs(ares);
 		return r;
 	}
@@ -168,12 +163,15 @@ public class SearchController {
 	public List<String> terms(@PathVariable String collection,
 			@RequestParam(value = "query", defaultValue = "") String queryString,
 			@RequestParam(value = "filter", defaultValue = EMPTY_MAP) String filter,
-			@RequestParam(value = "maxHits", defaultValue = "10") int maxHits
-			) throws IOException {
+			@RequestParam(value = "maxHits", defaultValue = "10") int maxHits) throws IOException {
 
+		filter = (filter.equalsIgnoreCase("null"))?EMPTY_MAP:filter;
+				
 		log.debug("Collection:{} Query:{} Filter:{} MaxHits:{}", collection, queryString, filter, maxHits);
-		Pattern emPattern = Pattern.compile(String.format("<%s>([^<]+)<\\/%s>",HIGHLIGHT_TAG,HIGHLIGHT_TAG));
-			
+		Pattern emPattern = Pattern.compile(String.format("<%s>([^<]+)<\\/%s>", HIGHLIGHT_TAG, HIGHLIGHT_TAG));
+				
+		
+
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.size(maxHits);
 		searchSourceBuilder.query(getQueryBuilder(queryString, filter));
@@ -185,22 +183,21 @@ public class SearchController {
 		SearchHits hits = searchResponse.getHits();
 
 		Map<String, Integer> matches = new HashMap<String, Integer>();
-		
+
 		for (SearchHit sh : hits.getHits()) {
 			sh.getHighlightFields().forEach((f, v) -> {
 				if (!(f.startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX) || f.endsWith(".keyword"))) {
 					for (Text t : v.getFragments()) {
 						Matcher match = emPattern.matcher(t.string());
 						while (match.find()) {
-							String m = match.group(1);							
+							String m = match.group(1);
 							if (matches.containsKey(m)) {
 								Integer count = matches.get(m) + 1;
-								matches.put(m,count);								
+								matches.put(m, count);
 							} else {
-								matches.put(m,1);	
+								matches.put(m, 1);
 							}
-							
-							
+
 						}
 					}
 				}
@@ -221,39 +218,25 @@ public class SearchController {
 		return hb;
 	}
 
-	private List<AggregationBuilder> getAggregationBuilders(String fields)
-			throws JsonParseException, JsonMappingException, IOException {
-		List<AggregationBuilder> ret = new ArrayList<AggregationBuilder>();
-		if (!fields.equals(EMPTY_ARRAY)) {
-			ObjectMapper om = new ObjectMapper();
-			JavaType type = om.getTypeFactory().constructCollectionType(List.class, String.class);
-			List<String> l = om.readValue(fields, type);
-			for (String nf : l) {
-				TermsAggregationBuilder ag = AggregationBuilders.terms(nf).field(nf + ".keyword");
-				ag.size(TERM_BUCKET_SIZE);
-				ret.add(ag);
-			}
+	private List<AggregationBuilder> getAggregationBuilders(String fields) throws JsonParseException, JsonMappingException, IOException {
+		List<AggregationBuilder> ret = new ArrayList<AggregationBuilder>();		
+		for (String nf : Converter.stringToArray(fields)) {
+			TermsAggregationBuilder ag = AggregationBuilders.terms(nf).field(nf + ".keyword");
+			ag.size(TERM_BUCKET_SIZE);
+			ret.add(ag);
 		}
 		return ret;
 	}
 
-	private QueryBuilder getQueryBuilder(String queryString, String filter)
-			throws JsonParseException, JsonMappingException, IOException {
-		QueryBuilder q = (queryString.isEmpty()) ? QueryBuilders.matchAllQuery()
-				: QueryBuilders.simpleQueryStringQuery(queryString);
-		if (filter.equals(EMPTY_MAP)) {
-			return q;
-		} else {
-			BoolQueryBuilder bq = QueryBuilders.boolQuery().must(q);
-			ObjectMapper om = new ObjectMapper();
-			Map<String, List<String>> map = om.readValue(filter, new TypeReference<Map<String, List<String>>>() {
-			});
-			map.forEach((key, value) -> {
+	private QueryBuilder getQueryBuilder(String queryString, String filter) throws JsonParseException, JsonMappingException, IOException {
+		QueryBuilder q = (queryString.isEmpty()) ? QueryBuilders.matchAllQuery() : QueryBuilders.simpleQueryStringQuery(queryString);
+			BoolQueryBuilder bq = QueryBuilders.boolQuery().must(q);							
+			Converter.stringToMap(filter).forEach((key, value) -> {
 				bq.filter((value.isEmpty()) ? QueryBuilders.matchAllQuery()
 						: QueryBuilders.termsQuery(key + ".keyword", value));
 			});
-			return bq;
-		}
+			return bq;		
 	}
 
+	
 }

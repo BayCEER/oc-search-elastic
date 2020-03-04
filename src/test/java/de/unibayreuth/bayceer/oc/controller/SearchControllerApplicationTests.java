@@ -21,7 +21,7 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 	public void fullTextPaging() {
 		String q = "microplastics";
 		
-		given(web).param("query", q).param("start", 0).param("hitsPerPage",5)
+		given(web).param("query", q).param("start", 0).param("hitsPerPage",5).param("fields","null").param("filter","null")
 		.get("/{collection}/index",PUB_COL).then()
 		.assertThat().body("hits.size()", is(5)).and().body("totalHits", equalTo(11));
 						

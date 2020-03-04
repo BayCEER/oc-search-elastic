@@ -40,12 +40,14 @@ public class FieldController {
 
 	@GetMapping(value="/{collection}/field/names",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<String> names(@PathVariable String collection, @RequestParam(defaultValue = "false") Boolean sysFields) throws IOException {
+		
+		final Boolean sys = (sysFields == null)? Boolean.FALSE:sysFields;		
 		log.debug("Get field names of {}", collection);
 		List<String> fields = new ArrayList<String>();
 						
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();		
 		properties(collection).forEach((key,value) -> {
-			if ( !(key.startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX)&&(!sysFields))) {
+			if ( !(key.startsWith(ReadmeDocument.SYSTEM_FIELD_PREFIX)&&(!sys))) {
 				searchSourceBuilder.aggregation(AggregationBuilders.count(key).field(key + ".keyword"));
 			}			
 		});
