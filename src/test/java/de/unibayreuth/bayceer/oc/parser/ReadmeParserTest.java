@@ -88,6 +88,15 @@ public class ReadmeParserTest {
 		
 	}
 	
+	@Test
+	public void parseKeyValueSpaces() throws IOException, ReadmeParserException {
+		String content = " creator : Spaces ";
+		List<SimpleEntry<String, String>> dc = ReadmeParser.parse(content);
+		assertEquals(1,dc.size());		
+		assertEquals("creator", dc.get(0).getKey());
+		assertEquals("Spaces", dc.get(0).getValue());
+	}
+	
 	
 	
 	
