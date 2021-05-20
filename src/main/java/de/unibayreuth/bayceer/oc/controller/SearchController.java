@@ -19,6 +19,7 @@ import org.elasticsearch.common.text.Text;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.Aggregation;
@@ -29,6 +30,9 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.ScoreSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +93,10 @@ public class SearchController {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.from(start);
 		searchSourceBuilder.size(hitsPerPage);
+		
+		// Sort by score and _path
+		searchSourceBuilder.sort(new FieldSortBuilder("_path.keyword").order(SortOrder.ASC));
+		searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));		
 
 		// Query
 		searchSourceBuilder.query(getQueryBuilder(queryString, filter));
@@ -229,13 +237,25 @@ public class SearchController {
 	}
 
 	private QueryBuilder getQueryBuilder(String queryString, String filter) throws JsonParseException, JsonMappingException, IOException {
-		QueryBuilder q = (queryString.isEmpty()) ? QueryBuilders.matchAllQuery() : QueryBuilders.simpleQueryStringQuery(queryString);
-			BoolQueryBuilder bq = QueryBuilders.boolQuery().must(q);							
-			Converter.stringToMap(filter).forEach((key, value) -> {
-				bq.filter((value.isEmpty()) ? QueryBuilders.matchAllQuery()
-						: QueryBuilders.termsQuery(key + ".keyword", value));
-			});
-			return bq;		
+    	// https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html
+		QueryBuilder q = null;
+		if (queryString.isEmpty()) {
+			q = QueryBuilders.matchAllQuery();
+		} else {
+			// Query path field by default
+			SimpleQueryStringBuilder sqb = QueryBuilders.simpleQueryStringQuery(queryString);
+			sqb.field("*");
+			sqb.field("_path");
+			q = sqb;					
+		}
+		
+		// Filter 
+		BoolQueryBuilder bq = QueryBuilders.boolQuery().must(q);							
+		Converter.stringToMap(filter).forEach((key, value) -> {
+			bq.filter((value.isEmpty()) ? QueryBuilders.matchAllQuery()
+					: QueryBuilders.termsQuery(key + ".keyword", value));
+		});
+		return bq;		
 	}
 
 	

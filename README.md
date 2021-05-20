@@ -9,6 +9,11 @@ _A microservice to index and search metadata information in ownCloud_
 + [REST API Documentation](https://bayceer.github.io/oc-search-elastic/rest-api.html)
 
 ## History
+### Version 1.1.11, May, 2021
+- New: Search in path
+- New: Sorted field list
+- New: Sort search results by path and score
+
 ### Version 1.1.10, March, 2020
 - Fixed null values in terms query
 

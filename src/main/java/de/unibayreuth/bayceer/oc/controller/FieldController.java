@@ -2,6 +2,7 @@ package de.unibayreuth.bayceer.oc.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,8 @@ public class FieldController {
 			if (ps.getValue()>0) {
 				fields.add(ps.getName());
 			}										
-		}		
+		}
+		Collections.sort(fields);
 		return fields;
 	}
 	

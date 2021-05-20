@@ -33,8 +33,8 @@ Version 2019-12-17
         key:value1
         key:value2
         ```
-    - Keys with with empty values are ignored
-    - All key names with preceding _ are reserved for system use 
+    - Keys with empty values are ignored
+    - All key names with a preceding _ are reserved for system use 
 
     2.3 _Separator_
     - A colon separates key and value

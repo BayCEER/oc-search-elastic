@@ -18,7 +18,8 @@ public class ElasticConfig {
     
        
     @Bean 
-    RestHighLevelClient client() {     	
+    RestHighLevelClient client() {     
+    	// https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high.html
     	return new RestHighLevelClient(RestClient.builder(new HttpHost(Host, Port, "http")));    	
     }
                    
