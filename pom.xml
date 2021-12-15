@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>de.unibayreuth.bayceer.oc</groupId>
 	<artifactId>oc-search-elastic</artifactId>
-	<version>1.1.11</version>
+	<version>1.1.12</version>
 	<name>oc-search-elastic</name>
 	<description>OwnCloud search provider based on Eleasticsearch</description>
 
@@ -39,6 +39,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<server.port>5541</server.port>
+		<log4j2.version>2.16.0</log4j2.version>
 	</properties>
 
 	<dependencies>
