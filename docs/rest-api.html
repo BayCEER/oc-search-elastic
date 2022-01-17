@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<meta name="author" content="Version 1.1.11">
+<meta name="author" content="Version 1.1.12">
 <title>OC-Search elastic REST Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -423,7 +423,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>OC-Search elastic REST Documentation</h1>
 <div class="details">
-<span id="author" class="author">Version 1.1.11</span><br>
+<span id="author" class="author">Version 1.1.12</span><br>
 <span id="revdate">Oliver Archner</span>
 </div>
 <div id="toc" class="toc2">
@@ -559,26 +559,93 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-index-post_path_parameters"><a class="link" href="#resources-index-post_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::index-post</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/index/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-index-post_request_fields"><a class="link" href="#resources-index-post_request_fields">Request fields</a></h4>
-<div class="paragraph">
-<p>Snippet request-fields not found for operation::index-post</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique document identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ownCloud file path</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File content as string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lastModified</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last modification time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>user</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ownCloud user name</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-index-post_curl_request"><a class="link" href="#resources-index-post_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::index-post</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/oc-search-public/index/99' -i -X POST \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8' \
+    -d '{"key":"99","path":"SFB/Microplastics/Munich/README.dc","user":"marge","content":"id:99\ntitle:Ternary microplastics\ncreator:Marge Simpson\npublisher:University of Munich\ndate:2019/10/10"}
+'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-index-post_http_response"><a class="link" href="#resources-index-post_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::index-post</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Date: Mon, 17 Jan 2022 08:55:54 GMT</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -589,26 +656,107 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-indexes-post_path_parameters"><a class="link" href="#resources-indexes-post_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::indexes-post</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/indexes</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-indexes-post_request_fields"><a class="link" href="#resources-indexes-post_request_fields">Request fields</a></h4>
-<div class="paragraph">
-<p>Snippet request-fields not found for operation::indexes-post</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of documents</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique document identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ownCloud file path</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File content as string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].lastModified</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last modification time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].user</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ownCloud user name</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-indexes-post_curl_request"><a class="link" href="#resources-indexes-post_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::indexes-post</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/oc-search-public/indexes' -i -X POST \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8' \
+    -d '[
+{"key": "2","path":"SFB/Microplastics/München/README.dc", "user":"marge", "content":"id:2\ntitle:Primary microplastics\ncreator:Marge Simpson\npublisher:University of Munich\ndate:2019/10/10"},
+{"key": "3","path":"SFB/Microplastics/Regensburg/README.dc","user":"bart", "content":"id:3\ntitle:Primary microplastics\ncreator:Bart Simpson\npublisher:University of Regensburg\ndate:2019/10/10"},
+{"key": "4","path":"SFB/Microplastics/Landshut/README.dc","user":"bart","content":"id:4\ntitle:Primary microplastics\ncreator:Bart Simpson\npublisher:University of Landshut\ndate:2019/10/10"},
+{"key": "5","path":"SFB/Microplastics/Freising/README.dc","user":"lisa", "content":"id:5\ntitle:Primary microplastics\ncreator:Lisa Simpson\npublisher:University of Freising\ndate:2019/10/10"},
+{"key": "6","path":"SFB/Microplastics/Würzburg/README.dc","user":"maggie", "content":"id:6\ntitle:Primary microplastics\ncreator:Maggie Simpson\npublisher:University of Würzburg\ndate:2019/10/10"},
+{"key": "7","path":"SFB/Microplastics/Paris/README.dc","user":"bart", "content":"id:7\ntitle:Secondary microplastics\ncreator:Bart Simpson\npublisher:University of Paris\ndate:2019/10/10"},
+{"key": "8","path":"SFB/Microplastics/Berlin/README.dc","user":"maggie","content":"id:8\ntitle:Secondary microplastics\ncreator:Maggie Simpson\npublisher:University of Berlin\ndate:2019/10/10"},
+{"key": "9","path":"SFB/Microplastics/New York/README.dc","user":"bart","content":"id:9\ntitle:Secondary microplastics\ncreator:Bart Simpson\npublisher:University of New York\ndate:2019/10/10"},
+{"key": "10","path":"SFB/Microplastics/Calgary/README.dc","user":"lisa","content":"id:10\ntitle:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\ndate:2019/10/10"},
+{"key": "11","path":"SFB/Microplastics/Hamburg/README.dc","user":"marge", "content":"id:11\ntitle:Secondary microplastics\ncreator:Marge Simpson\npublisher:University of Hamburg\ndate:2019/10/10"},
+{"key": "12","path":"SFB/Microplastics/Bamberg/README.dc", "user":"homer","content":"id:12\ntitle:Secondary microplastics\ncreator:Homer Simpson\npublisher:University of Bamberg\ndate:2019/10/10"},
+{"key": "13","path":"REZ/Howtos/BayEOS/README.dc","user":"tom", "content":"id:13\ntitle:Getting started with BayEOS\ncreator:Tom Tailor;Tim Tailor\npublisher:University of Nebraska\ndate:2019/10/10"}
+]
+'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-indexes-post_http_response"><a class="link" href="#resources-indexes-post_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::indexes-post</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Date: Mon, 17 Jan 2022 08:56:13 GMT</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -619,15 +767,73 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-index-update_path_parameters"><a class="link" href="#resources-index-update_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::index-put</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/index/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-index-update_request_fields"><a class="link" href="#resources-index-update_request_fields">Request fields</a></h4>
-<div class="paragraph">
-<p>Snippet request-fields not found for operation::index-put</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique document identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ownCloud file path</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File content as string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lastModified</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last modification time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>user</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ownCloud user name</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -637,9 +843,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-index-delete_path_parameters"><a class="link" href="#resources-index-delete_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::index-delete</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/index/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -649,9 +875,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-indexes-delete_path_parameters"><a class="link" href="#resources-indexes-delete_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::indexes-delete</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/indexes</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -661,32 +903,178 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-index-get_path_parameters"><a class="link" href="#resources-index-get_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::index-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/index</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-index-get_request_parameters"><a class="link" href="#resources-index-get_request_parameters">Request parameters</a></h4>
-<div class="paragraph">
-<p>Snippet request-parameters not found for operation::index-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html#simple-query-string-syntax">Simple query parser syntax</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>start</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Start index</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hitsPerPage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of hit records per page</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fragmentSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of characters in each preview fragment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fields</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field names for aggregation as JSON List e.g. "['creator','publisher']</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>filter</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter expression as JSON Map e.g.: {"creator":["Maggie Simpson","Bart Simpson"],&#8230;&#8203;}</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-index-get_response_fields"><a class="link" href="#resources-index-get_response_fields">Response fields</a></h4>
-<div class="paragraph">
-<p>Snippet response-fields not found for operation::index-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of hits</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hits[].key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hits[].score</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Match score</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hits[].path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File path</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hits[].previews</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hit highlighted text fragment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hits[].thumb</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Thumbnail</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>totalHits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of all hits found</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aggs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of aggregation results</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aggs[].key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field key</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aggs[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Field title with cardinality</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aggs[].sumOtherDocCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of documents not included</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aggs[].results</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of count results</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aggs[].results[].key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key term</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aggs[].results[].count</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Counts of term</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-index-get_curl_request"><a class="link" href="#resources-index-get_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::index-get</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/oc-search-public/index?query=Maggie&amp;start=0&amp;hitsPerPage=10&amp;fragmentSize=5&amp;fields=%5B%22creator%22%2C%22publisher%22%2C%22_userName%22%5D&amp;filter=%7B%22creator%22%3A%5B%22Maggie%20Simpson%22%2C%22Bart%20Simpson%22%5D%7D' -i -X GET \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-index-get_http_response"><a class="link" href="#resources-index-get_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::index-get</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Length: 655
+Date: Mon, 17 Jan 2022 08:56:15 GMT
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+
+{"hits":[{"key":"8","path":"SFB/Microplastics/Berlin/README.dc","previews":{"creator":["&lt;mark&gt;Maggie&lt;/mark&gt;"]},"score":1.7509891,"thumb":null},{"key":"6","path":"SFB/Microplastics/WÃ¼rzburg/README.dc","previews":{"creator":["&lt;mark&gt;Maggie&lt;/mark&gt;"]},"score":1.7509891,"thumb":null}],"totalHits":2,"aggs":[{"key":"creator","sumOtherDocCount":0,"results":[{"key":"Maggie Simpson","count":2}],"title":"Creator (1)"},{"key":"_userName","sumOtherDocCount":0,"results":[],"title":"UserName (0)"},{"key":"publisher","sumOtherDocCount":0,"results":[{"key":"University of Berlin","count":1},{"key":"University of WÃ¼rzburg","count":1}],"title":"Publisher (2)"}]}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -697,26 +1085,96 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-document-get_path_parameters"><a class="link" href="#resources-document-get_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::document-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/index/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-document-get_response_fields"><a class="link" href="#resources-document-get_response_fields">Response fields</a></h4>
-<div class="paragraph">
-<p>Snippet response-fields not found for operation::document-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique document identifier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ownCloud file path</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File content as string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lastModified</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last modification time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>user</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ownCloud user name</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-document-get_curl_request"><a class="link" href="#resources-document-get_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::document-get</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/oc-search-public/index/10' -i -X GET \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-document-get_http_response"><a class="link" href="#resources-document-get_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::document-get</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Length: 226
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 17 Jan 2022 08:55:49 GMT
+
+{"key":"10","path":"SFB/Microplastics/Calgary/README.dc","content":"id:10\ntitle:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\ndate:2019/10/10","lastModified":null,"user":"lisa"}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -727,26 +1185,76 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-field-names_path_parameters"><a class="link" href="#resources-field-names_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::field-names</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/field/names</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sysFields</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Include system fields in output list: &lt;'true'|'false'&gt; default: 'true'</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-field-names_response_fields"><a class="link" href="#resources-field-names_response_fields">Response fields</a></h4>
-<div class="paragraph">
-<p>Snippet response-fields not found for operation::field-names</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array of field names</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-field-names_curl_request"><a class="link" href="#resources-field-names_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::field-names</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/oc-search-public/field/names?sysFields=true' -i -X GET \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-field-names_http_response"><a class="link" href="#resources-field-names_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::field-names</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Date: Mon, 17 Jan 2022 08:56:00 GMT
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Content-Length: 59
+
+["_key","_path","_user","creator","id","publisher","title"]</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -757,32 +1265,101 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-terms-get_path_parameters"><a class="link" href="#resources-terms-get_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::terms-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/terms</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-terms-get_request_parameters"><a class="link" href="#resources-terms-get_request_parameters">Request parameters</a></h4>
-<div class="paragraph">
-<p>Snippet request-parameters not found for operation::terms-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>query</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html#simple-query-string-syntax">Simple query parser syntax</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>filter</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter expression as JSON Map e.g.: {"creator":["Maggie Simpson","Bart Simpson"],&#8230;&#8203;}</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>maxHits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max number of returned records</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-terms-get_response_fields"><a class="link" href="#resources-terms-get_response_fields">Response fields</a></h4>
-<div class="paragraph">
-<p>Snippet response-fields not found for operation::terms-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of hits</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-terms-get_curl_request"><a class="link" href="#resources-terms-get_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::terms-get</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/oc-search-public/terms?query=Simp*&amp;maxHits=10&amp;filter=%7B%22creator%22%3A%5B%22Maggie%20Simpson%22%2C%22Bart%20Simpson%22%5D%7D' -i -X GET \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-terms-get_http_response"><a class="link" href="#resources-terms-get_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::terms-get</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Length: 11
+Content-Type: application/json;charset=UTF-8
+Date: Mon, 17 Jan 2022 08:56:13 GMT
+Transfer-Encoding: chunked
+
+["Simpson"]</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -801,9 +1378,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-image-post_path_parameters"><a class="link" href="#resources-image-post_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::image-post</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/image/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -813,9 +1410,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-image-get_path_parameters"><a class="link" href="#resources-image-get_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::image-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/image/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -825,20 +1442,47 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-image-delete_path_parameters"><a class="link" href="#resources-image-delete_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::image-delete</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/image/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-image-delete_curl_request"><a class="link" href="#resources-image-delete_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::image-delete</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/default/image/10' -i -X DELETE \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-image-delete_http_response"><a class="link" href="#resources-image-delete_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::image-delete</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Date: Mon, 17 Jan 2022 08:56:04 GMT</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -849,20 +1493,43 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect3">
 <h4 id="resources-images-delete_path_parameters"><a class="link" href="#resources-images-delete_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::images-delete</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/images</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-images-delete_curl_request"><a class="link" href="#resources-images-delete_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::images-delete</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/default/images' -i -X DELETE \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-images-delete_http_response"><a class="link" href="#resources-images-delete_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::images-delete</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Date: Mon, 17 Jan 2022 08:56:07 GMT</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -882,9 +1549,29 @@ All image data is transferred in PNG (image/png) format.</p>
 </div>
 <div class="sect3">
 <h4 id="resources-thumb-post_path_parameters"><a class="link" href="#resources-thumb-post_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::thumb-post</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/thumbnail/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -894,9 +1581,29 @@ All image data is transferred in PNG (image/png) format.</p>
 </div>
 <div class="sect3">
 <h4 id="resources-thumb-get_path_parameters"><a class="link" href="#resources-thumb-get_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::thumb-get</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/thumbnail/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -906,20 +1613,47 @@ All image data is transferred in PNG (image/png) format.</p>
 </div>
 <div class="sect3">
 <h4 id="resources-thumb-delete_path_parameters"><a class="link" href="#resources-thumb-delete_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::thumb-delete</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/thumbnail/{key}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document identifier</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-thumb-delete_curl_request"><a class="link" href="#resources-thumb-delete_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::thumb-delete</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/default/thumbnail/6' -i -X DELETE \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-thumb-delete_http_response"><a class="link" href="#resources-thumb-delete_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::thumb-delete</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Date: Mon, 17 Jan 2022 08:56:07 GMT</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -930,20 +1664,43 @@ All image data is transferred in PNG (image/png) format.</p>
 </div>
 <div class="sect3">
 <h4 id="resources-thumbs-delete_path_parameters"><a class="link" href="#resources-thumbs-delete_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::thumbs-delete</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. /{collection}/thumbnails</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>collection</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection identifier. Must start with 'oc' or 'owncloud'</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="resources-thumbs-delete_curl_request"><a class="link" href="#resources-thumbs-delete_curl_request">Example request</a></h4>
-<div class="paragraph">
-<p>Snippet curl-request not found for operation::thumbs-delete</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/default/thumbnails' -i -X DELETE \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json; charset=UTF-8'</code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-thumbs-delete_http_response"><a class="link" href="#resources-thumbs-delete_http_response">Example response</a></h4>
-<div class="paragraph">
-<p>Snippet http-response not found for operation::thumbs-delete</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Date: Mon, 17 Jan 2022 08:56:07 GMT</code></pre>
+</div>
 </div>
 </div>
 </div>
