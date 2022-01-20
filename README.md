@@ -9,6 +9,9 @@ _A microservice to index and search metadata information in ownCloud_
 + [REST API Documentation](https://bayceer.github.io/oc-search-elastic/rest-api.html)
 
 ## History
+### Version 1.1.13, Jan, 2022
+- Fix: Remove [BOM](https://de.wikipedia.org/wiki/Byte_Order_Mark) in UTF content string 
+
 ### Version 1.1.12, Dec, 2021
 - Fix: log4j vulnerability
 

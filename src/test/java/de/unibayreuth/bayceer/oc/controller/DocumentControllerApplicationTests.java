@@ -3,8 +3,11 @@ package de.unibayreuth.bayceer.oc.controller;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
@@ -15,9 +18,12 @@ import java.nio.file.Paths;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.restdocs.payload.FieldDescriptor;
+import org.springframework.restdocs.payload.JsonFieldType;
 
 public class DocumentControllerApplicationTests extends ControllerApplicationTests {
 	
+		
 	@Before
 	public void setUp() throws IOException {
 		super.setUp();
@@ -48,6 +54,7 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 		
 			
 	
+		
 	@Test
 	public void Get() {
 		given(web)
@@ -63,8 +70,25 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 		.get("/{collection}/index/{key}",PUB_COL,"10").then().assertThat()
 		.body("content",equalTo("id:10\ntitle:Secondary microplastics\ncreator:Lisa Simpson;Marge Simpson\npublisher:University of Calgary\ndate:2019/10/10"));
 	}
-		
 	
+	
+	@Test
+	public void GetAll() {
+		given(web)
+		.filter(
+				document("indexes-get",
+						pathParameters(
+								parameterCollection,
+								parameterWithName("sysFields").description("Include system fields in output list: <'true'|'false'> default: 'false'").optional()
+						)	
+				)
+		)
+		.param("sysFields","true")
+		.get("/{collection}/indexes",PUB_COL);		
+		
+	}
+	
+
 			
 	@Test
 	public void Put() throws IOException {		

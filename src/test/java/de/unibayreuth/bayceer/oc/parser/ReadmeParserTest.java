@@ -44,9 +44,15 @@ public class ReadmeParserTest {
 		assertEquals(1,dc.size());
 		assertEquals("title", dc.get(0).getKey());
 		assertEquals("Line1\nLine2", dc.get(0).getValue());
+	}
 		
-		
-		
+	@Test
+	public void parseBOMContent() throws IOException, ReadmeParserException {
+			String content = new String(Files.readAllBytes(Paths.get("src/test/resources/READMEdc_bom.txt")));		
+			List<SimpleEntry<String, String>> dc = ReadmeParser.parse(content);
+			assertEquals(1,dc.size());
+			assertEquals("title", dc.get(0).getKey());
+			assertEquals("BOM is here", dc.get(0).getValue());			
 	}
 	
 	@Test

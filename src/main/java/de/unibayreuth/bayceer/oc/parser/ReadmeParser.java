@@ -3,6 +3,7 @@ package de.unibayreuth.bayceer.oc.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.ByteBuffer;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,19 +22,28 @@ public class ReadmeParser {
 				
 	public static final String START_COMMENT_CHAR = "#";
 	public static final String LIST_SEPERATOR = ";";
-
-	
 	// Verified on https://regex101.com/
 	private static final Pattern p = Pattern.compile("([^:]*):(.*)");
+
 	
 	private static Logger log = LoggerFactory.getLogger(ReadmeParser.class);
 
 	public static List<SimpleEntry<String, String>> parse(String content) throws ReadmeParserException {
-		List<SimpleEntry<String, String>> ret = new ArrayList<SimpleEntry<String, String>>(10);
+		List<SimpleEntry<String, String>> ret = new ArrayList<SimpleEntry<String, String>>(10);		
+		// Handle BOM prefix in UTF encoded string
+		// https://de.wikipedia.org/wiki/Byte_Order_Mark
+		byte[] bc = content.getBytes();
+		if (bc.length>2 && bc[0]==-17 && bc[1]==-69 && bc[2]==-65){							
+			ByteBuffer bb = ByteBuffer.wrap(bc,3,bc.length-3);			
+			byte s[] = new byte[bb.remaining()];
+			bb.get(s);
+			content = new String(s);
+		}
 		
+				
 		try (BufferedReader br = new BufferedReader(new StringReader(content))) {
 			String line;			
-			while ((line = br.readLine()) != null) {
+			while ((line = br.readLine()) != null) {												
 				// Skip Comments 
 				if (!line.trim().startsWith(START_COMMENT_CHAR)) {					
 					// Handle Block

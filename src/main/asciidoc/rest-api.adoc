@@ -69,11 +69,19 @@ A `POST` request is used to create an index
 operation::index-post[snippets='path-parameters,request-fields,curl-request,http-response']
 
 [[resources-indexes-post]]
-=== Create Many 
+=== Create Bulk 
 
 A `POST` request is used to create many indexes in a bulk
 
 operation::indexes-post[snippets='path-parameters,request-fields,curl-request,http-response']
+
+[[resources-indexes-get]]
+=== Get Many
+
+A `GET` request is used to get a all documents of an index
+
+operation::indexes-get[snippets='path-parameters,curl-request,http-response']
+
 
 [[resources-index-update]]
 === Update 
@@ -118,7 +126,7 @@ operation::document-get[snippets='path-parameters,response-fields,curl-request,h
 
 A `GET` request is used to retrieve the fields of an index. Fields with no documents are excluded by default.
 
-operation::field-names[snippets='path-parameters,response-fields,curl-request,http-response']
+operation::field-names[snippets='path-parameters,request-parameters,response-fields,curl-request,http-response']
 
 [[resources-terms-get]]
 === Terms
