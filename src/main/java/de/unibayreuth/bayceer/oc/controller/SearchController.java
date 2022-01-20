@@ -36,6 +36,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,13 +62,17 @@ public class SearchController {
 
 	@Autowired
 	RestHighLevelClient client;
+	
+	
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private static final String EMPTY_ARRAY = "[]";
 	private static final String EMPTY_MAP = "{}";
 	
-	private static final int TERM_BUCKET_SIZE = 10;
+	@Value("${TERM_BUCKET_SIZE:20}")
+	private int TERM_BUCKET_SIZE;
+	
 	private static final String HIGHLIGHT_TAG = "mark";
 	private static final String FRA_SIZE = "100";
 

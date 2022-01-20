@@ -50,8 +50,6 @@ public class SearchControllerApplicationTests extends ControllerApplicationTests
 						parameterWithName("fragmentSize").description("Number of characters in each preview fragment").optional(),
 						parameterWithName("fields").description("Field names for aggregation as JSON List e.g. \"['creator','publisher']").optional(),						
 						parameterWithName("filter").description("Filter expression as JSON Map e.g.: {\"creator\":[\"Maggie Simpson\",\"Bart Simpson\"],...}").optional()
-						
-						
 				), 
 				responseFields( 
 						subsectionWithPath("hits").description("An array of hits").type(JsonFieldType.ARRAY),

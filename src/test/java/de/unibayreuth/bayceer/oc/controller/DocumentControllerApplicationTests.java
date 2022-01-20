@@ -3,12 +3,11 @@ package de.unibayreuth.bayceer.oc.controller;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import java.io.IOException;
@@ -18,8 +17,7 @@ import java.nio.file.Paths;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.restdocs.payload.FieldDescriptor;
-import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.restdocs.request.RequestParametersSnippet;
 
 public class DocumentControllerApplicationTests extends ControllerApplicationTests {
 	
@@ -35,7 +33,7 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 	}
 	
 	@Test
-	public void Post() throws IOException {
+	public void Create() throws IOException {
 		given(web)
 		.filter(
 			document("index-post",
@@ -56,7 +54,7 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 	
 		
 	@Test
-	public void Get() {
+	public void Read() {
 		given(web)
 		.filter(
 				document("document-get",
@@ -73,14 +71,16 @@ public class DocumentControllerApplicationTests extends ControllerApplicationTes
 	
 	
 	@Test
-	public void GetAll() {
+	public void ReadBulk() {
 		given(web)
 		.filter(
 				document("indexes-get",
 						pathParameters(
-								parameterCollection,
+								parameterCollection								
+						),
+						requestParameters(
 								parameterWithName("sysFields").description("Include system fields in output list: <'true'|'false'> default: 'false'").optional()
-						)	
+						)
 				)
 		)
 		.param("sysFields","true")

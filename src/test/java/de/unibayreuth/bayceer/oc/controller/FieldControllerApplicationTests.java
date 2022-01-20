@@ -6,6 +6,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import org.junit.Test;
@@ -21,10 +22,13 @@ public class FieldControllerApplicationTests extends ControllerApplicationTests 
 				document("field-names",
 						pathParameters(
 								parameterCollection								
-						),	
+						),
+						requestParameters(
+								parameterWithName("sysFields").description("Include system fields in output list: <'true'|'false'> default: 'true'").optional()
+						),
 						responseFields(
 								fieldWithPath("[]").description("Array of field names")
-						)
+						)						
 				)
 		)
 		.get("/{collection}/field/names",PUB_COL).then().assertThat()
@@ -37,9 +41,11 @@ public class FieldControllerApplicationTests extends ControllerApplicationTests 
 		.filter(
 				document("field-names",
 						pathParameters(
-								parameterCollection,
-								parameterWithName("sysFields").description("Include system fields in output list: <'true'|'false'> default: 'true'").optional()
+								parameterCollection								
 						),	
+						requestParameters(
+								parameterWithName("sysFields").description("Include system fields in output list: <'true'|'false'> default: 'true'").optional()
+						),
 						responseFields(
 								fieldWithPath("[]").type(JsonFieldType.ARRAY).description("Array of field names")								
 						)

@@ -16,12 +16,17 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.ClearScrollRequest;
+import org.elasticsearch.action.search.ClearScrollResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -133,35 +138,46 @@ public class DocumentController {
 	}
 	
 	@GetMapping(value="/{collection}/indexes",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<StreamingResponseBody> readBulk(@PathVariable String collection, @RequestParam(defaultValue = "false") Boolean sysFields){		
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		if (!sysFields) {
-			String[] exFields = new String[] {"_*"};
-			searchSourceBuilder.fetchSource(null,exFields);
-			
-		}
-		searchSourceBuilder.query(QueryBuilders.matchAllQuery());		
+	public ResponseEntity<StreamingResponseBody> readBulk(@PathVariable String collection, @RequestParam(defaultValue = "false") Boolean sysFields) throws IOException{				
+		final Scroll scroll = new Scroll(TimeValue.timeValueSeconds(30L));
 		SearchRequest searchRequest = new SearchRequest(collection);
+		searchRequest.scroll(scroll);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		if (!sysFields) {			
+			searchSourceBuilder.fetchSource(null,new String[] {"_*"});
+		}
+		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
 		searchRequest.source(searchSourceBuilder);
-	    StreamingResponseBody responseBody = response -> {
-	    	response.write("[".getBytes());	    	
-	    	SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-			SearchHits hits = searchResponse.getHits();
-			int n = 0;
-			for (SearchHit sh : hits.getHits()) {
-				if (n > 0) {
-					response.write(",".getBytes());
+		
+	    StreamingResponseBody responseBody = response -> {	    	
+	    	SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT); 
+			String scrollId = searchResponse.getScrollId();
+			SearchHit[] searchHits = searchResponse.getHits().getHits();
+	    	response.write("[".getBytes());
+	    	int n = 0;
+	    	while (searchHits != null && searchHits.length > 0) {	    	
+				for (SearchHit sh : searchHits) {
+					if (n > 0) {
+						response.write(",".getBytes());
+					}								
+					response.write(sh.getSourceAsString().getBytes());
+					n++;
 				}
-				response.write(sh.getSourceAsString().getBytes());
-				n++;
-			}
-			response.write("]".getBytes());
-	      };	      
-	      return ResponseEntity.ok()
+				SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId); 
+			    scrollRequest.scroll(scroll);
+			    searchResponse = client.scroll(scrollRequest, RequestOptions.DEFAULT);
+			    scrollId = searchResponse.getScrollId();
+			    searchHits = searchResponse.getHits().getHits();				
+	    	}
+	    	response.write("]".getBytes());
+	    	ClearScrollRequest clearScrollRequest = new ClearScrollRequest(); 
+	    	clearScrollRequest.addScrollId(scrollId);
+	    	client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
+	    };	 
+	    
+		return ResponseEntity.ok()
 	              .contentType(MediaType.APPLICATION_JSON_UTF8)
 	              .body(responseBody);
-	     
-	      
 	}
 	
 			

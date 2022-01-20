@@ -80,7 +80,7 @@ operation::indexes-post[snippets='path-parameters,request-fields,curl-request,ht
 
 A `GET` request is used to get a all documents of an index
 
-operation::indexes-get[snippets='path-parameters,curl-request,http-response']
+operation::indexes-get[snippets='path-parameters,request-parameters,curl-request,http-response']
 
 
 [[resources-index-update]]

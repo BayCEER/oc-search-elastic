@@ -11,6 +11,8 @@ _A microservice to index and search metadata information in ownCloud_
 ## History
 ### Version 1.1.13, Jan, 2022
 - Fix: Remove [BOM](https://de.wikipedia.org/wiki/Byte_Order_Mark) in UTF content string 
+- New: Export collection to file
+- New: Configure TERM_BUCKET_SIZE
 
 ### Version 1.1.12, Dec, 2021
 - Fix: log4j vulnerability
